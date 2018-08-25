@@ -48,10 +48,12 @@ void dodaj_na_kraj(_cvor** lista, void * podatak)
 	dodaj_na_kraj(&(*lista)->sledeci, podatak);
 }
 
-void oslobodi_listu(_cvor* lista)
+void oslobodi_listu(_cvor* lista, void oslpodatakfunc(void *))
 {
 	if(lista) {
-		oslobodi_listu(lista->sledeci);
+		oslobodi_listu(lista->sledeci, oslpodatakfunc);
+		if (oslpodatakfunc != NULL && lista->podatak != NULL)
+			oslpodatakfunc(lista->podatak);
 		free(lista);
 	}
 }

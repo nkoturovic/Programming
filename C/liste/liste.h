@@ -10,8 +10,7 @@
  * biti podatak/podaci koji su             *
  * staticki/dinamicki alocirani            *
  *******************************************/
-typedef struct _cvor
-{
+typedef struct _cvor {
   void * podatak;
   struct _cvor* sledeci;
 }_cvor;
@@ -19,7 +18,7 @@ typedef struct _cvor
 _cvor* napravi_cvor(void * podatak);
 void dodaj_na_pocetak(_cvor** lista, void * podatak);
 void dodaj_na_kraj(_cvor** lista, void * podatak);
-void oslobodi_listu(_cvor* lista);
+void oslobodi_listu(_cvor* lista, void oslpodatakfunc(void *));
 int broj_elemenata(_cvor * lista);
 void * na_indeksu(_cvor* lista, int indeks);
 void ispisi_listu(_cvor* lista, void (*printel_func)(void *));
