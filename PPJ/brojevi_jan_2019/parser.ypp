@@ -1,0 +1,205 @@
+%{
+#include <iostream>
+#include <string>
+#include <vector>
+#include <map>
+#include "List.hpp"
+
+std::vector <List*> tmp_lists;
+List * new_list_tmp(List lista = List()) { 
+	List * l_ptr = new List(lista);
+	tmp_lists.push_back(l_ptr);
+	return l_ptr;
+}
+
+void clear_tmps() { for (auto& e : tmp_lists) delete e; tmp_lists.resize(0); }
+
+extern int yylex();
+void yyerror(std::string err_msg) {
+	std::cerr << "Sintaskna greska: " << err_msg << std::endl;
+	exit(EXIT_FAILURE);	
+}
+
+std::map <std::string, int> tablica;
+std::map <std::string, List> tablica_lista;
+%}
+
+%union {
+	int broj_type;	
+	std::string * string_type;
+	List * list_type;
+}
+
+%token print_token int_token list_token eq_token neq_token
+%token <broj_type> broj_token
+%token <string_type> id_token
+%token shr_token shl_token
+
+%type <broj_type> E
+%type <list_type> L Lista_brojeva
+
+%left '|'
+%left '^'
+%left '&'
+%left shr_token shl_token
+%left '+' '-'
+%left '*' '/'
+%nonassoc '~'
+%nonassoc UMINUS;
+
+%%
+
+Program 
+	: Niz_naredbi ';'
+	;
+
+/* Nakon svake izvrsene naredbe cistimo alocirane objekte clear_temps() *
+ * new_list_tmp ima ulogu operatora new, i pokaz. na sve dinamicki alocirane objekte tipa List *
+ * cuva u vektoru tmp_lists, koji se na kraju svake naredbe ocisti svi_elem -> delete + vec.size na 0 */
+Niz_naredbi
+	: Niz_naredbi ';' Naredba { clear_tmps(); }
+	| Naredba { clear_tmps(); }
+
+Naredba
+	: print_token '(' E ',' broj_token ')' { 
+		switch ($5) {
+			case 8 : std::cout <<  std::oct << $3 << std::endl; break;
+			case 10: std::cout << $3 << std::endl; break;
+			case 16: std::cout << std::uppercase << std::hex << $3 << std::endl; break;
+			default: std::cout << "Nepodrzana osnova" << std::endl;
+		}						
+	}
+
+	| print_token '(' id_token ')' { 
+		auto finder = tablica.find(*$3);
+		if (finder != tablica.end()) {
+			std::cout << std::dec << tablica[*$3] << std::endl;
+		} else {
+			auto finder_lista = tablica_lista.find(*$3);
+			if (finder_lista != tablica_lista.end()) {
+				std::cout << tablica_lista[*$3] << std::endl;
+			} else {
+				std::cout << *$3 << " nije definisana" << std::endl;
+			}
+		}
+		delete $3;
+	}
+
+	| print_token '(' E ')' { 
+		std::cout << std::dec << $3 << std::endl;
+	}
+	| print_token '(' L ')' { std::cout << *$3 << std::endl; } 
+	| int_token id_token '='  E {
+						auto finder = tablica.find(*$2);
+						if (finder == tablica.end()) {
+							tablica[*$2] = $4; 
+						} else {
+							std::cout << "Promenljiva je vec definisana" << std::endl;
+						}
+						delete $2;
+	}
+	| int_token id_token {
+						auto finder = tablica.find(*$2);
+						if (finder == tablica.end()) {
+							tablica[*$2] = 0; 
+						} else {
+							std::cout << "Promenljiva je vec definisana" << std::endl;
+						}
+						delete $2;
+
+	
+	}
+	| list_token id_token '='  L { 
+						auto finder = tablica_lista.find(*$2);
+						if (finder == tablica_lista.end()) {
+							tablica_lista[*$2] = *$4; 
+						} else {
+							std::cout << "Promenljiva je vec definisana" << std::endl;
+						}
+						delete $2;
+	}
+	| list_token id_token { 
+						auto finder = tablica_lista.find(*$2);
+						if (finder == tablica_lista.end()) {
+							tablica_lista[*$2] = List(); 
+						} else {
+							std::cout << "Promenljiva je vec definisana" << std::endl;
+						}
+						delete $2;
+	}
+	| id_token '='  E {	
+					auto finder = tablica.find(*$1);
+					if (finder != tablica.end()) {
+						tablica[*$1] = $3; 
+					} else {
+						std::cout << *$1 << " nije definisana" << std::endl;
+					}
+						delete $1;
+	}
+	| id_token '='  L {	
+					auto finder = tablica_lista.find(*$1);
+					if (finder != tablica_lista.end()) {
+						tablica_lista[*$1] = *$3; 
+					} else {
+						std::cout << *$1 << " nije definisana" << std::endl;
+					}
+						delete $1;
+	}
+	| E eq_token E { std::cout << ($1 == $3 ? "True" : "False") << std::endl; }
+	| E  neq_token E { std::cout << ($1 != $3 ? "True" : "False") << std::endl; }
+	| E { }
+	| L { }
+	;
+
+E 
+	: E '+' E  { $$ = $1 + $3; }
+	| E '-' E  { $$ = $1 - $3; }
+	| E '*' E  { $$ = $1 * $3; }
+	| E '/' E  { $$ = $1 / $3; }
+	| E '^' E  { $$ = $1 ^ $3; }
+	| '-' E %prec UMINUS { $$ = - $2; }
+	| E shl_token E  { if ($3 > 0) { $$ = $1 << $3; } else { std::cout << "Drugi operand mora biti veci od 0" << std::endl; } }
+	| E shr_token E  { if ($3 > 0) { $$ = $1 >> $3; } else { std::cout << "Drugi operand mora biti veci od 0" << std::endl; }  }
+	| E '&' E  { $$ = $1 & $3; }
+	| E '|' E  { $$ = $1 | $3; }
+	| '~' E  { $$ = ~$2; }
+	| '(' E ')' { $$ = $2; }
+	| L '[' E ']' { $$ = (*$1)[$3]; }
+	| id_token {
+		auto finder = tablica.find(*$1);
+		if (finder != tablica.end()) {
+			$$ = tablica[*$1];
+		} else {
+			std::cout << *$1 << " nije definisana" << std::endl;
+		}	
+		delete $1;
+	 }
+	| broj_token { $$ = $1; }
+	;
+
+L
+	: '[' Lista_brojeva ']' { $$ = $2; }
+	| id_token { 
+		auto finder = tablica_lista.find(*$1);
+		if (finder != tablica_lista.end()) {
+			$$ = new_list_tmp(tablica_lista[*$1]);
+		} else {
+			std::cout << "Greska, promenljiva nije dobro definisana" << std::endl;
+		}
+
+		delete $1;
+	 };
+	;
+
+Lista_brojeva 
+	: Lista_brojeva ',' E { $1->dodaj_na_kraj($3); $$ = $1; }
+	| E { $$ = new_list_tmp(); $$->dodaj_na_kraj($1); }
+	;
+	
+
+%%
+
+int main() {
+	yyparse();
+	return 0;
+}
