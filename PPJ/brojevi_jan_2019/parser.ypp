@@ -49,16 +49,14 @@ std::map <std::string, List> tablica_lista;
 
 %%
 
-Program 
-	: Niz_naredbi ';'
-	;
-
-/* Nakon svake izvrsene naredbe cistimo alocirane objekte clear_temps() *
+/* Nakon svake izvrsene naredbe cistimo alocirane objekte clear_tmps() *
  * new_list_tmp ima ulogu operatora new, i pokaz. na sve dinamicki alocirane objekte tipa List *
  * cuva u vektoru tmp_lists, koji se na kraju svake naredbe ocisti svi_elem -> delete + vec.size na 0 */
-Niz_naredbi
-	: Niz_naredbi ';' Naredba { clear_tmps(); }
-	| Naredba { clear_tmps(); }
+
+Program  
+	: Naredba ';' Program { clear_tmps(); }
+	| Naredba ';' { clear_tmps(); }
+	;
 
 Naredba
 	: print_token '(' E ',' broj_token ')' { 
