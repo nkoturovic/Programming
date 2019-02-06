@@ -20,8 +20,3 @@ int List::operator[] (unsigned index) {
 void List::dodaj_na_kraj(int e) {
 	m_elementi.push_back(e);
 }
-
-List::~List() {
-	// std::cerr << "Oslobodjeno: ";
-	// std::cerr << this << std::endl;
-}
