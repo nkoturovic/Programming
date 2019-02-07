@@ -12,7 +12,7 @@ List * new_list_tmp(List lista = List()) {
 	return l_ptr;
 }
 
-void clear_tmps() { for (auto& e : tmp_lists) delete e; tmp_lists.resize(0); }
+void clear_tmps() { for (auto& e : tmp_lists) delete e; tmp_lists.clear(); }
 
 extern int yylex();
 void yyerror(std::string err_msg) {
