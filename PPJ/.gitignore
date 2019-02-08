@@ -1,0 +1,4 @@
+*.o
+*.out
+parser.yy.*
+lex.yy.*
