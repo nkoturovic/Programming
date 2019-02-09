@@ -1,0 +1,138 @@
+%{
+#include <iostream>
+#include <string>
+#include <vector>
+#include <map>
+#include <iomanip>
+#include "kvaternion.hpp"
+
+extern int yylex();
+void yyerror(std::string err_msg) {
+	std::cerr << "Sintaskna greska: " << err_msg << std::endl;
+	exit(EXIT_FAILURE);	
+}
+
+std::map <char, Kvaternion> tablica;
+%}
+
+%union {
+	float float_type;	
+	Kvaternion * kvaternion_type;
+	char char_type;
+}
+
+%token def_token norm_token print_token 
+%token dodela_token
+%token <float_type> broj_token
+%token <char_type> id_token komp_id_token komp_print_id_token
+%token <kvaternion_type>
+
+%type <float_type> Broj
+%type <kvaternion_type> E
+%type <kvaternion_type> Def_list
+
+%nonassoc NEGNUM
+%left '+' '-'
+%left '/' '*'
+%left SKALAR_D
+%right SKALAR_L
+%nonassoc UMINUS
+
+%%
+
+Program 
+	: Naredba ';' Program
+	| Naredba ';'
+	;
+
+Naredba 
+	: Naredba_def
+	| Naredba_print
+	| Naredba_norm
+	| Naredba_dodela
+	;
+
+Naredba_def 
+	: def_token '(' id_token ')' { tablica[$3] = Kvaternion(); }
+	| def_token '(' id_token ',' Def_list ')' {
+		tablica[$3] = *$5;
+		delete $5;	
+	}
+	;
+
+
+Naredba_print
+	: print_token '(' '"' komp_print_id_token '"' ',' id_token ')' { 
+		auto it = tablica.find($7);
+		if (it != tablica.end()) {
+			if ($4 == 'q') std::cout << $7 << " = " << tablica[$7] << std::endl;
+			else std::cout << tablica[$7].komponenta($4) << std::endl;
+		} else {
+			std::cout << "Greska: Promenljiva " << $7 << " nije definisana" << std::endl;	
+		}
+	}
+	;
+
+
+Naredba_norm
+	: norm_token '(' id_token ')' {
+		auto it = tablica.find($3);
+		if (it != tablica.end()) {
+			std::cout << "|" << $3 << "|" << " = " << std::fixed << std::setprecision(2) << Kvaternion::norma(tablica[$3]) << std::endl;
+		} else {
+			std::cout << "Greska, promenljiva: " << $3 << " nije definisana" << std::endl;	
+		}
+	}
+	;
+
+Naredba_dodela
+	: id_token dodela_token E {
+		tablica[$1] = *$3;
+		delete $3;
+	}
+	;
+
+E 
+	: E '+' E { $$ = new Kvaternion(*$1 + *$3); delete $1; delete $3; }
+	| E '-' E { $$ = new Kvaternion(*$1 - *$3); delete $1; delete $3; }
+	| E '*' E { $$ = new Kvaternion(*$1 * *$3); delete $1; delete $3; }
+	| E '/' E { $$ = new Kvaternion(*$1 / *$3); delete $1; delete $3; }
+	| '-' E %prec UMINUS { $$ = new Kvaternion(-*$2); delete $2; }
+	| Broj '*' E %prec SKALAR_L { $$ = new Kvaternion($1 * *$3); delete $3; }
+	| E '*' Broj %prec SKALAR_D { $$ = new Kvaternion($3 * *$1); delete $1; }
+	| '(' E ')' { $$ = $2; }
+	;
+
+E 
+	: id_token {
+		auto it = tablica.find($1);
+		if (it != tablica.end()) {
+			$$ = new Kvaternion(tablica[$1]);
+		} else {
+			std::cout << "Greska, promenljiva: " << $1 << " nije definisana" << std::endl;	
+			$$ = new Kvaternion();
+		}
+	}
+	;
+
+Def_list 
+	: Def_list ',' id_token ':' Broj { 
+		$$ = $1;
+		std::string status = $$->postavi_komponentu($3, $5);
+		if (status != "Success") {
+			std::cout << "Greska: " << status << std::endl;
+		} 
+	}
+	| id_token ':' Broj { $$ = new Kvaternion(); $$->postavi_komponentu($1, $3); }
+	;
+
+Broj 
+	: broj_token { $$ = $1; }
+	| '-' broj_token %prec NEGNUM { $$ = -$2; }
+	;
+%%
+
+int main() {
+	yyparse();
+	return 0;
+}

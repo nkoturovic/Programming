@@ -1,0 +1,12 @@
+def(a, s:1, i:2, j:3, k:4);
+print("%q", a);
+def(b, s:1, i:-2, j:3, k:-4);
+print("%q", b);
+c := a * b;
+print("%q", c);
+d := a / b;
+print("%q", d);
+e := a + b/c;
+print("%q", e);
+f := 10*e-3*(a-b*c);
+print("%q", f);
