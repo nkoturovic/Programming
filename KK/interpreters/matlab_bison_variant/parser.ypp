@@ -1,0 +1,146 @@
+/* For more infomation, look at official bison 
+ * (c++ parser section) documentation */
+%{
+#include <iostream>
+#include <string>
+#include "matrica.hpp"
+#include "driver.hpp"
+
+/* Syntax error function */
+void yy::parser::error(const location_type& l, const std::string& msg) {
+	driver.error(l, msg);
+}
+
+std::map<std::string, Matrica> tablica;
+%}
+
+%language "c++"
+%locations
+
+%define api.value.type variant
+%define api.token.constructor
+%define parse.trace
+
+/* Better error messages */
+%define parse.error verbose
+
+/* Pass to flex */
+%code requires {
+class Driver;
+}
+%param { Driver &driver }
+
+/* Token definitions */
+%token
+	eof_token 0 "end of file"	lparen_token "("  
+	disp_token "disp"               rparen_token ")"  
+	size_token "size"               comma_token ","   
+	elwise_plus_token ".+"          semicol_token ";" 
+	elwise_mul_token ".*"           plus_token "+"    
+	mul_token "*"                   minus_token "-"   
+	transp_token "'"                lt_token "<"      
+	sqr_lparen_token "["            gt_token ">"      
+	sqr_rparen_token "]"            assign_token "="  
+	newline_token "\n"
+
+
+/* No union needed, we are using variant */
+%type <Matrica> E Matrica Visedim_lista
+%type <std::vector<int>> Lista Niz_br
+
+%token <std::string> id_token "identifier";
+%token <int> int_token "number";
+
+%left ".+"
+%left ".*"
+%left "*"
+%nonassoc "'"
+
+%%
+/* Consider maybe using std::swap instead of std::move everywhere 
+ * because there is discussion about potential move problems with 
+ * bison variant types */
+
+Program : Naredba "\n" Program {}
+	| Naredba "\n"	       {}
+	| "\n" Program         {}
+	;
+
+Naredba : Naredba_disp
+	| Naredba_size
+	| Naredba_dodela
+	;
+
+Naredba_disp : disp_token "(" E ")" { std::cout << $3 << std::endl; }
+	     ;
+
+Naredba_size : size_token "(" E ")" { std::cout << $3.broj_vrsta() << 'x' << $3.broj_kolona() << std::endl; }
+	     ;
+
+
+Naredba_dodela : id_token "=" E { tablica[$1] = std::move($3); }
+	       ;
+
+E : E ".+" E { $$ = $1 + $3; }
+  | E ".*" E { $$ = $1 * $3; }
+  | E "*" E { $$ = Matrica::mul_matrix($1, $3); }
+  | E "'" { $$ = Matrica::transponuj($1); }
+  | "(" E ")" { $$ = std::move($2); }
+  ;
+
+
+E : Matrica { $$ = std::move($1); }
+  | id_token {
+	if (tablica.find($1) != tablica.end()) {
+		$$ = tablica[$1];
+	} else {
+		std::cout << "Greska, promenljiva '" << $1 << "' nije definisana" << std::endl;
+		exit(EXIT_FAILURE);
+	}
+        }
+  ;
+
+
+Matrica : "[" Visedim_lista "]" { $$ = std::move($2); }
+	;
+
+
+Visedim_lista : Visedim_lista ";" Lista { $$ = std::move($1); $$.dodaj_vrstu($3); }
+	      | Lista { $$.dodaj_vrstu($1); }
+	      ;
+
+
+Lista : "[" Niz_br "]" { $$ = std::move($2); }
+      ;
+
+
+Niz_br : Niz_br "," int_token { $$ = std::move($1); $$.push_back($3); }
+       | int_token            { $$.push_back($1); }
+       ;
+
+
+%%
+
+int main(int argc, char * argv[])
+{
+	bool read_from_file = false;
+	Driver driver;
+
+	int i;
+	for (i = 1; i < argc; i++) {
+		if (argv[i] == std::string ("-p")) {
+			driver.trace_parsing = true;
+		} else if (argv[i] == std::string ("-s")) {
+			driver.trace_scanning = true;
+		} else {
+			read_from_file = true;
+		}
+	}
+
+	if (read_from_file)
+		driver.parse(argv[i-1]);
+	else
+		driver.parse();
+
+	return 0;
+}
