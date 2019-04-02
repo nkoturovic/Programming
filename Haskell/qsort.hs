@@ -1,2 +1,4 @@
 qsort [] = []
-qsort (x:xs) = qsort [a | a <- xs, a <= x] ++ [x] ++ qsort [b | b <- xs, b > x]
+qsort (x:xs) = qsort(less) ++ [x] ++ qsort(greater)
+                 where less = [l | l <- xs, l <= x]
+                       greater = [g | g <- xs, g > x]
