@@ -28,7 +28,7 @@ rightTriangles = [ (a,b,c) |
                    c <- [1..10], b <- [1..c], a <- [1..b],
                                          a^2 + b^2 == c^2 ]
 
-{-- tuples can have different types --}
+{-- Tuples can have different types --}
 mytuple = (1, 'a', [1,2,3])
 fst rightTriangles {- or -} snd rightTriangles
 get5th (_,_,_,_,a,_,_,_,_,_) = -- returns 5th element in 10tuple
@@ -39,3 +39,21 @@ listRng a b = [a..b]
 pairMax :: Ord p => (p, p) -> p
 pairMax p | fst p > snd p = fst p
           | otherwise = snd p
+
+{-- Pattern Matching --}
+len [] = 0 -- Custom length function base case
+len (_:xs) = 1 + (len xs) -- Custom length function
+
+-- not pattern example
+not -> Bool -> Bool
+not True = False
+not False = True
+
+-- Custom && function
+(&&) :: Bool -> Bool -> Bool
+True && True = x 
+_ && _ = False
+-- Second way (better)
+(&&) :: Bool -> Bool -> Bool
+True && x = x 
+False && _ = False

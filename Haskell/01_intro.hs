@@ -1,10 +1,9 @@
--- Haskell examples
-{- Prelude is standard module
+{- Haskell examples -}
+{- Prelude is standard module 
  - print, putStr, putStrLn - prints to stdout 
  - You can run shell command with :!
  - :load :reload :info :type :quit
- - '->' - computation abstraction
- -}
+ - '->' - computation abstraction -}
 
 {- Types: Bool, Char, String, Int, Integer, Float, Double -}
 {- Type classes: Eq, Ord, Num, Integral, Fractional -}
@@ -21,7 +20,7 @@ f1 n = return (isPositive n)
        >>= print
        >> putStrLn " number"
 
--- Do monad
+-- Do monad (also IO monad stuff)
 -- let defines variable local to f2
 f2 n = do 
     let isPos = isPositive n
@@ -31,3 +30,5 @@ f2 n = do
 
 f3 = do print "Hello world"
         putStrLn "Hello world"
+
+show 2 --converts 2 to string "2"
