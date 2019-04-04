@@ -2,6 +2,8 @@
 import os
 from sys import exit as ex
 
+# Pomoc: help(bilo_sta) ili pydoc(bilo_sta)
+
 a, b = 1, 2 # a = 1, b = 2
 a, b = b, a # swap
 

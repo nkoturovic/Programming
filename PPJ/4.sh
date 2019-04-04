@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-
 echo '<h3>Grupe</h3>'
 echo '<table border="1px">'
 echo '<tr><th>GROUP NAME</th><th>PASSWORD</th><th>GID</th></tr>'

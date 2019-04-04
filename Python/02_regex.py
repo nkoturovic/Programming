@@ -27,13 +27,17 @@ for r in rezultat:
     username = r.group('username')
     provider = r.group('provider')
     domain = r.group('domain')
+    # or better use .groupdict() to automatically 
+    # create map (based on names)
+    # mapa = r.groupdict() -> mapa["username"]
     print('username:', username)
     print('provider:', provider)
     print('domain:', domain)
 
+
 print('---ZAMENJENO---')
 
-#zamenjeno = regex.sub(r'\g<provider>@\g<username>.\g<domain>', content)
+# zamenjeno = regex.sub(r'\g<provider>@\g<username>.\g<domain>', content)
 # zamenjeno = regex.sub(r'\g<2>@\g<1>.\g<3>', content)
 # zamenjeno = regex.sub(r'\2@\1.\3', content)
 zamenjeno = regex.sub(r'\g<provider>@\g<username>.\g<domain>', content)

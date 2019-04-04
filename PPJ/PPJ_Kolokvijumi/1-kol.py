@@ -70,15 +70,8 @@ regex_igraca = napravi_regex_igraca()
 lista_igraca = [] # lista igraca (igrac je (k,v) mapa)
 # Stavimo igrace u listu
 for m in regex_igraca.finditer(sadrzaj_fajla):
-        igrac = {}
-        igrac['ime'] = m.group('ime')
-        igrac['drzava'] = m.group('drzava')
-        igrac['broj_golova'] = m.group('broj_golova')
-        igrac['broj_utakmica'] = m.group('broj_utakmica')
-        igrac['godina1'] = m.group('godina1')
-        igrac['godina2'] = m.group('godina2')
-        igrac['klubovi'] = m.group('klubovi')
-        lista_igraca.append(igrac)
+    igrac = m.groupdict() 
+    lista_igraca.append(igrac)
 
 if opcija == 'g':
     for igrac in lista_igraca:

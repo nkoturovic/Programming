@@ -128,7 +128,7 @@ def procitaj_datoteku(putanja):
         print('Greska pri otv: ', e, file=sys.stderr)
         sys.exit(1)
 
-fcontent = procitaj_datoteku('podsetnik_python.py')
+fcontent = procitaj_datoteku('00_podsetnik.py')
 
 for i, linija in enumerate(fcontent.split('\n')):
     print(i, ' ', linija)
