@@ -26,7 +26,8 @@ f2 n = do
     let isPos = isPositive n
     print (if isPos then "yes" else "no")
     komentar <- getLine
-    print ("Vas komentar je: " ++ komentar)
+    return ()
+    --print ("Vas komentar je: " ++ komentar)
 
 f3 = do print "Hello world"
         putStrLn "Hello world"
