@@ -1,3 +1,6 @@
+#ifndef __GRAPH_H__
+#define __GRAPH_H__
+
 #include <iostream>
 #include <list>
 #include <map>
@@ -119,3 +122,5 @@ void Graph<VertexType, EdgeType, is_directed>::add_connections(const std::map<Ve
 		}
 	}
 }
+
+#endif //__GRAPH_H__
