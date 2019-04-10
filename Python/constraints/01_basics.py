@@ -2,7 +2,7 @@
 import constraint
 
 def constraint_func(x,y,z):
-    if x*y < z: 
+    if x*y < z:
         return True
     else:
         return False

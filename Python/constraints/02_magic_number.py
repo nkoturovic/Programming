@@ -27,7 +27,7 @@ problem.addConstraint(sum_constr_func, "ceg")
 
 solutions = problem.getSolutions()
 for i, s in enumerate(solutions):
-   print(str(i+1) + '--------\n') 
+   print(str(i+1) + '--------\n')
    print(\
     str('| {} {} {} |\n'
         '| {} {} {} |\n'

@@ -107,3 +107,11 @@ upisi_u_datoteku('izlaz.txt', tekst)
 
 # ---- POMOC import io, help(io) ili pydoc io
 
+# Main function (Python as a script) ./script.py
+def main():
+    print('Hello world')
+
+# execute only if run as a script ./, or with option
+# python -m scriptname.py, but not when imported as module
+if __name__ == "__main__":
+    main()
