@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 from graph import Graph
-from pprint import pprint
 
 # Not recomended
 # adj = {'a': {'b':[1,2,3], 'c':[2,3,4]},
@@ -35,7 +34,7 @@ g.add_connection('Budimpesta', 'Bukurest', 840)
 g.add_connection('Bukurest', 'Sofija', 360)
 
 # print(g.closest_neighbor('A'))
-# pprint(g.adj_list)
+# print(g.adj_list)
 # print(g.vertices())
 # start, finish = input(), input()
 print(g.dijkstra('Bukurest', 'Podgorica'))
