@@ -372,12 +372,8 @@ def draw_maze_solution(maze_matrix, maze_scheme, solution):
     return maze_solution
     
     
-print()
-print('Zadatak 4.8')
-maze_matrix = [['#', 'F', '.', '.', '.'],
-               ['.', 'X', '#', 'X', '.'],
-               ['.', '.', 'S', '.', '.']]  
-
+# Funkcije koje se mogu koristiti kao heuristika
+# u resavanju lavirinta
 def menhetn(current, finish):
     curr_x, curr_y = current[0], current[1]
     finish_x, finish_y = finish[0], finish[1]
@@ -387,6 +383,12 @@ def euklid(current, finish):
     curr_x, curr_y = current[0], current[1]
     finish_x, finish_y = finish[0], finish[1]
     return round(sqrt((curr_x - finish_x)**2 + (curr_y - finish_y)**2), 1)
+
+print()
+print('Zadatak 4.8')
+maze_matrix = [['#', 'F', '.', '.', '.'],
+               ['.', 'X', '#', 'X', '.'],
+               ['.', '.', 'S', '.', '.']]  
 
 start, finish, adjacency_list, h_table, maze_scheme = maze_to_graph(maze_matrix, h=menhetn, dot_weight=1, hash_weight=6)
 g = Graph(adjacency_list, h_table)
