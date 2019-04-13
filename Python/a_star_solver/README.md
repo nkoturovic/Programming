@@ -27,6 +27,7 @@ Primer 3.5 (Iz knjige)
 |-------|-----------------------------------------|------------|
 Pronadjen put: A -> D -> H -> B -> E
 ```
+## Resavanje Lavirinta:
 ```
 Zadatak 4.8
 ---- MAZE ----
