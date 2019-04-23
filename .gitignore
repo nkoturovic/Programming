@@ -1,3 +1,11 @@
+lex.yy.c
+location.hh
+parser.output
+parser.tab.cpp
+parser.tab.hpp
+position.hh
+stack.hh
+
 # Prerequisites
 *.d
 
