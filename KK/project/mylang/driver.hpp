@@ -3,6 +3,7 @@
 
 #include <map>
 #include <string>
+#include "structs.hpp"
 #include "parser.tab.hpp"
 
 /* Tell Flex the lexer's prototype ... */

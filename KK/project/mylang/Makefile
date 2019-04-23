@@ -1,9 +1,9 @@
 GOAL = mylang.out
 CXX = g++
-CXXFLAGS = -std=c++17 -Wall -Wextra -Wno-unused
+CXXFLAGS = -std=c++2a -Wall -Wextra -Wno-unused -I include
 
 $(GOAL): lex.yy.o parser.tab.o driver.o
-	$(CXX) -o $@ $^
+	$(CXX) -o $@ $^ libfmt.a
 
 parser.tab.o: parser.tab.cpp parser.tab.hpp driver.hpp
 	$(CXX) $(CXXFLAGS) -c -o $@ $<

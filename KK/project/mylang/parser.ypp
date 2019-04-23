@@ -3,6 +3,8 @@
 %{
 #include <iostream>
 #include <string>
+#include "fmt/format.h"
+#include "structs.hpp"
 #include "driver.hpp"
 
 /* Syntax error function */
@@ -31,12 +33,13 @@ class Driver;
 %token
 	eof_token 0 "end of file"	
 	print_token "print"          
+    crl_lparen_token "{"            
+	crl_rparen_token "}"            
 	sqr_lparen_token "["            
 	sqr_rparen_token "]"            
     plus_token "+"    
     minus_token "-"   
 	mul_token "*"                   
-    newline_token "\n"
     lparen_token "("  
     rparen_token ")"  
     assign_token "="  
@@ -45,13 +48,12 @@ class Driver;
     gt_token ">"      
     leq_token "<="      
     geq_token ">="      
-    semicol_token ";" 
+    separator_token ";" 
     comma_token ","   
+    tab_token "\t"   
 
 
 /* No union needed, we are using variant */
-%type <std::vector<int>> Lista Niz_br
-
 %token <std::string> id_token "identifier";
 %token <int> int_token "number";
 
@@ -63,11 +65,24 @@ class Driver;
  * because there is discussion about potential move problems with 
  * bison variant types */
 
-Program : Naredba Program {}
-        | Naredba {}
-        ;
+Program : Block {}
 
-Naredba : "\n" {}
+
+Block : "{" List_of_stmts "}"
+      | "{" /* Empty Block */ "}"
+      ;
+
+
+List_of_stmts : List_of_stmts Stmt
+              | Stmt 
+              ;
+
+Stmt : Sprt_stmt ";"
+     | ";" /* Empty statement */ {}
+     | Block
+     ;
+
+Sprt_stmt : print_token "(" int_token ")" { std::cout << $3 << std::endl; }
 
 %%
 

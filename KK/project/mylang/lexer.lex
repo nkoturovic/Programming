@@ -6,6 +6,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <string>
+#include "structs.hpp"
 #include "parser.tab.hpp"
 #include "driver.hpp"
 static yy::location loc;
@@ -27,12 +28,14 @@ loc.step();
 
 "print" { return yy::parser::make_print_token(loc); }
 {ID} { return yy::parser::make_id_token(yytext, loc); }
+"{" { return yy::parser::make_crl_lparen_token(loc); }
+"}" { return yy::parser::make_crl_rparen_token(loc); }
 "[" { return yy::parser::make_sqr_lparen_token(loc); }
 "]" { return yy::parser::make_sqr_rparen_token(loc); }
 "(" { return yy::parser::make_lparen_token(loc); }
 ")" { return yy::parser::make_rparen_token(loc); }
 "," { return yy::parser::make_comma_token(loc); }
-";" { return yy::parser::make_semicol_token(loc); }
+";" { return yy::parser::make_separator_token(loc); }
 "+" { return yy::parser::make_plus_token(loc); }
 "*" { return yy::parser::make_mul_token(loc); }
 "-" { return yy::parser::make_minus_token(loc); }
@@ -43,7 +46,7 @@ loc.step();
 ">" { return yy::parser::make_gt_token(loc); }
 "=" { return yy::parser::make_assign_token(loc); }
 
-[1-9][0-9]+ { 
+[1-9][0-9]* { 
 	int val = strtol(yytext, NULL, 10);
 	return yy::parser::make_int_token(val, loc);
 }
@@ -58,9 +61,12 @@ loc.step();
 	return yy::parser::make_int_token(val, loc);
 }
 
-[ \t] { loc.step(); }
-"\n"+ { loc.lines(yyleng); loc.step(); 
-	return yy::parser::make_newline_token(loc);
+[\t ] { 
+    loc.step(); 
+}
+
+"\n" { 
+    loc.lines(yyleng); loc.step(); 
  }
 
 . { 
