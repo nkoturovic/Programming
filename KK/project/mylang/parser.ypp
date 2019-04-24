@@ -31,31 +31,52 @@ class Driver;
 
 /* Token definitions */
 %token
-	eof_token 0 "end of file"	
-	print_token "print"          
-    crl_lparen_token "{"            
-	crl_rparen_token "}"            
-	sqr_lparen_token "["            
-	sqr_rparen_token "]"            
-    plus_token "+"    
-    minus_token "-"   
-	mul_token "*"                   
-    lparen_token "("  
-    rparen_token ")"  
-    assign_token "="  
-    eq_token "=="  
-    lt_token "<"      
-    gt_token ">"      
-    leq_token "<="      
-    geq_token ">="      
-    separator_token ";" 
-    comma_token ","   
-    tab_token "\t"   
-
+eof_token 0 "end of file"	
+print_token "print"          
+if_token "if"          
+while_token "while"          
+int_kw_token "Int"          
+bool_kw_token "Bool"          
+real_kw_token "Real"          
+char_kw_token "Char"          
+string_kw_token "String"          
+crl_lparen_token "{"            
+crl_rparen_token "}"            
+sqr_lparen_token "["            
+sqr_rparen_token "]"            
+plus_token "+"    
+minus_token "-"   
+asterix_token "*"                   
+slash_token "/"                   
+backslash_token "\\"                   
+mod_token "mod"                   
+percent_token "%"                   
+lparen_token "("  
+rparen_token ")"  
+assign_token "="  
+eq_token "=="  
+lt_token "<"      
+gt_token ">"      
+leq_token "<="      
+geq_token ">="      
+shl_token "<<"      
+shr_token ">>"      
+semicol_token ";" 
+dot_token "." 
+col_token ":" 
+comma_token ","   
+dbl_amp_token "&&"
+amp_token "&"
+dbl_pipe_token "||"
+pipe_token "|"
 
 /* No union needed, we are using variant */
 %token <std::string> id_token "identifier";
-%token <int> int_token "number";
+%token <int> int_token "Integer literal";
+%token <double> real_token "Real literal";
+%token <std::string> string_token "String literal";
+%token <char> char_token "Char literal";
+%token <bool> bool_token "Bool literal";
 
 %left "+" "-"
 %left "*" "/"
@@ -77,12 +98,17 @@ List_of_stmts : List_of_stmts Stmt
               | Stmt 
               ;
 
-Stmt : Sprt_stmt ";"
+Stmt : Sprt_stmt ";" /* Stmt that ends with separator  */
      | ";" /* Empty statement */ {}
      | Block
      ;
 
 Sprt_stmt : print_token "(" int_token ")" { std::cout << $3 << std::endl; }
+	  | print_token "(" real_token ")" { std::cout << $3 << std::endl; }
+	  | print_token "(" bool_token ")" { std::cout << $3 << std::endl; }
+          | print_token "(" char_token ")" { std::cout << $3 << std::endl; }
+          | print_token "(" string_token ")" { std::cout << $3 << std::endl; }
+	  ;
 
 %%
 
