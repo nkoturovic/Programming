@@ -106,8 +106,8 @@ Stmt : Sprt_stmt ";" /* Stmt that ends with separator  */
 Sprt_stmt : print_token "(" int_token ")" { std::cout << $3 << std::endl; }
 	  | print_token "(" real_token ")" { std::cout << $3 << std::endl; }
 	  | print_token "(" bool_token ")" { std::cout << $3 << std::endl; }
-          | print_token "(" char_token ")" { std::cout << $3 << std::endl; }
-          | print_token "(" string_token ")" { std::cout << $3 << std::endl; }
+      | print_token "(" char_token ")" { std::cout << $3 << std::endl; }
+      | print_token "(" string_token ")" { std::cout << $3 << std::endl; }
 	  ;
 
 %%
