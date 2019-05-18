@@ -1,0 +1,96 @@
+ <!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script src="jquery-3.4.1.min.js"></script>
+<title>Tamplate manager</title>
+</head>
+<body>
+
+<h1>Template manager</h1>
+
+<h2>Paste template here:</h2>
+<textarea id="inText" rows="10" cols="40" style="resize:none;"></textarea><br>
+<br>
+<button id="loadAttr">LOAD ATTRIBUTES</button><br>
+
+<br>
+<div id="elements">
+</div>
+<br>
+
+<button id="updateButton">GENERATE HTML OUTPUT</button><br>
+<h2>OUTPUT:</h2>
+<textarea id="outText" rows="10" cols="40" style="resize:none;"></textarea><br>
+</body>
+</html> 
+
+<script>
+    var content = null
+    $.ajaxSetup({
+        async: false
+    });
+
+   //     function readFile(fileName) {
+   //        var content = null
+   //     $.get(fileName, function(responseTxt, statusTxt){
+   //         if(statusTxt == "success") {
+   //             content = responseTxt
+   //         }
+   //         if(statusTxt == "error") {
+   //             throw("Error: " + xhr.status + ": " + xhr.statusText);
+   //             content = null
+   //         }
+   //         
+   //     });
+   //     return content
+   // }
+
+
+    $("#loadAttr").click(function() {
+        loadElements($("#inText").val())
+    })
+
+    $("#updateButton").click(function() {
+        replace(content)
+    })
+
+
+function loadElements(text) {
+    try {
+        // Store to global variabl content
+        content = text
+    } catch (e) {
+        alert(e)
+    }
+
+    var elRegex = /{{\s*([^\s]+)\s*}}/g;
+    var result
+    $('#elements').empty()
+    uniqueList = []
+    while((result = elRegex.exec(content)) !== null) {
+        if (uniqueList.indexOf(result[1]) == -1) {
+            $("#elements").append(
+            result[1] + '<br><textarea rows="6" cols="40" id="' + 
+                    result[1] + '" class="elem"/></textarea><br>' ) 
+            uniqueList.push(result[1])
+        }
+    }
+}
+
+function replaceAll(str, find, replace) {
+    return str.replace(new RegExp(find, 'g'), replace);
+}
+
+function replace(content) {
+        var newContent = content
+        $(".elem").each(function() {
+            var id = $(this).attr("id")
+            var toPut = $(this).val()
+            var pattern = "{{\\s*" + id + "\\s*}}"
+            newContent = replaceAll(newContent, pattern, toPut)
+        })
+        $("#outText").val(newContent)
+}
+
+</script>
