@@ -76,7 +76,7 @@
 \lstset {
     basicstyle=\fontsize{10.45}{13}\ttfamily,breaklines=true
     framesep=5pt,
-    backgroundcolor=\color{lightgray!11},
+    backgroundcolor=\color{lightgray!15},
     %captionpos=0, % sets the caption-position to bottom
     abovecaptionskip=2pt,
     belowcaptionskip=4pt,
@@ -98,7 +98,7 @@
     %framexrightmargin=-13pt,
     frame=single, % adds a frame around the code
     captionpos=t,
-    rulecolor=\color{gray!90}
+    rulecolor=\color{gray!62!black}
 }
 
 \setlength{\belowcaptionskip}{-6pt}
