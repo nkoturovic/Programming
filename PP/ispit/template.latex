@@ -8,7 +8,7 @@
 
 \documentclass[a4paper, 11pt, twoside]{article}
 \usepackage[bindingoffset=0mm,%
-            left=19mm,right=19mm,top=30mm,bottom=20mm,%
+            left=19mm,right=19mm,top=30mm,bottom=18mm,%
 	    footskip=12mm]{geometry}
 
 \usepackage[english]{babel}
@@ -71,7 +71,6 @@
 \renewcommand{\lstlistingname}{\textbf{Program}}% Listing -> Algorithm
 \renewcommand{\lstlistlistingname}{\textbf{Lista \lstlistingname a}}
 \addto\captionsenglish{\renewcommand{\contentsname}{Sadržaj}}
-\setcounter{section}{1}
 
 \lstset {
     basicstyle=\fontsize{10.45}{13}\ttfamily,breaklines=true
@@ -80,11 +79,11 @@
     %captionpos=0, % sets the caption-position to bottom
     abovecaptionskip=2pt,
     belowcaptionskip=4pt,
-    aboveskip=-15pt,
-    belowskip=3pt,
+    aboveskip=-12pt,
+    belowskip=0pt,
     breaklines=true,
-    xleftmargin=6pt,
-    xrightmargin=6pt,
+    xleftmargin=4pt,
+    xrightmargin=4pt,
     tabsize=4, % sets default tabsize to 4 spaces
     columns=fullflexible,
     showstringspaces=false,
@@ -98,14 +97,33 @@
     %framexrightmargin=-13pt,
     frame=single, % adds a frame around the code
     captionpos=t,
-    rulecolor=\color{gray!62!black}
+    rulecolor=\color{gray!65!black}
 }
 
-\setlength{\belowcaptionskip}{-6pt}
-\setlength{\abovecaptionskip}{5pt}
+\setlength{\belowcaptionskip}{-10pt}
+\setlength{\abovecaptionskip}{7pt}
+\setlength{\textfloatsep}{20mm}
 
-\DeclareCaptionFormat{listing}{\hspace{2pt}#1#2#3}
+\DeclareCaptionFormat{listing}{\hspace{1pt}#1#2#3}
 \captionsetup[lstlisting]{format=listing,singlelinecheck=false,labelsep=colon,labelfont=bf}
+
+% Listing and enumerate around padding
+%\setlength{\fboxsep}{0pt}
+\let\saveditemize=\itemize
+\let\savedenditemize=\enditemize
+\makeatletter
+\renewenvironment{itemize}
+{\ifnum \@listdepth=0\vspace{-3mm}\fi\saveditemize}
+{\savedenditemize\ifnum\@listdepth=0\fi\vspace{-3mm}}
+
+%\setlength{\fboxsep}{0pt}
+\let\savedenumerate=\enumerate
+\let\savedendenumerate=\endenumerate
+\makeatletter
+\renewenvironment{enumerate}
+{\ifnum \@listdepth=0\vspace{-3mm}\fi\savedenumerate}
+{\savedendenumerate\ifnum\@listdepth=0\fi\vspace{-3mm}}
+
 
   %\lstset{
   %      language=customcpp,
@@ -200,12 +218,12 @@
 \usepackage{fancyhdr}
 
 \pagestyle{fancy}
-\renewcommand{\subsectionmark}[1]{\markboth{#1}{}} % set the \leftmark
+\renewcommand{\sectionmark}[1]{\markboth{#1}{}} % set the \leftmark
 \fancyhf{}
-\fancyhead[LE]{\texttt{\thepage}}
-\fancyhead[RE]{\texttt{\leftmark}}
-\fancyhead[LO]{\texttt{\leftmark}}
-\fancyhead[RO]{\texttt{\thepage}}
+\fancyhead[LE]{\textit{\textbf{\thepage}}}
+\fancyhead[RE]{\textit{\textbf{\leftmark}}}
+\fancyhead[LO]{\textit{\textbf{\leftmark}}}
+\fancyhead[RO]{\textit{\textbf{\thepage}}}
 \fancyfoot[C]{}
 
 \fancypagestyle{plain}{%

@@ -10,7 +10,7 @@ date: 22.05.2019.
 **NAPOMENA:** Virtuelnu mašinu sa potrebnim softverom možete preuzeti sa sledećeg linka: [link](https://drive.google.com/file/d/12uPc_a6P1Tc26LeiugR9L4TjADrCXhnu/view)
 \newpage
 
-# Deo 1. - Scala
+# Deo 1 - Scala
 ## InteliJ razvojno okruženje
 Koristimo `InteliJ Idea` kao razvojno okruženje.
 
@@ -31,7 +31,7 @@ object ZdravoSvete {
     }
 }
 ```
-- `Alt+Shift+F10` je prečica za Run, pritisnite `Alt+Shift+F10`
+`Alt+Shift+F10` je prečica za Run, pritisnite `Alt+Shift+F10`
 ```
 Zdravo, svete!
 ```
@@ -74,11 +74,11 @@ Zdravo iz niti: 12
 
 Synchronized kljucna rec obelezava kriticnu sekciju
 i garantuje se da u svakom trenutku tacno jedna nit moze izvsavati naredbe iz bloka.
-Synchronized se moze koristiti na vise nacina:
+Synchronized se moze koristiti na više načina:
 ```{.scala caption="Synchronized"}
 // 1. Nacin - Metodi klase
 def f() = synchronized { teloFunkcije }
-// Na ovaj nacin smo naglasili da je metod f jedne instance nase klase kriticna sekcija
+// Metod f jedne instance nase klase je kriticna sekcija
 
 // 2. Nacin - instanca.synchronized { blok }
 // var mapa je tipa ConcurrentHashMap[Char, Int]()
@@ -92,9 +92,8 @@ mapa.synchronized {
 }
 
 ```
-
-
 \newpage
+
 ### Java FX (Gui)
 
 ```{.scala caption="Gui aplikacija koja prepisuje iz jednog TextField elementa u drugi" label="lst:jfxprepis"}
@@ -194,4 +193,5 @@ Thread.sleep(1000) // Spava 1s
 ThreadLocalRandom.current().nextInt(1,10) // Random broj iz [1, 10) 
 ```
 \newpage
-# Deo 2. - Prolog
+
+# Deo 2 - Prolog
