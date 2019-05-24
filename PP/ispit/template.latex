@@ -558,7 +558,7 @@ $endfor$
 $endif$
 
 $if(title)$
-\title{\textbf{$title$$if(thanks)$\thanks{$thanks$}$endif$}}
+\title{\textbf{$title$$if(thanks)$\thanks{$thanks$}$endif$}\vspace{-2mm}}
 $endif$
 $if(subtitle)$
 \providecommand{\subtitle}[1]{}
