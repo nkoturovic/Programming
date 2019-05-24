@@ -97,8 +97,8 @@ $endif$
     %framexleftmargin=-13pt,
     %framexrightmargin=-13pt,
     frame=single, % adds a frame around the code
-    captionpos=t,
-    rulecolor=\color{gray!65!black}
+    captionpos=t
+    %rulecolor=\color{gray!65!black}
 }
 
 \setlength{\belowcaptionskip}{-10pt}
