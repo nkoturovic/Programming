@@ -4,8 +4,9 @@ clear
 
 echo "Compiling $1 to PDF ..."
 ARGUMENT="$1"
-pandoc $ARGUMENT.md --template template.latex --listings --pdf-engine=xelatex -o $ARGUMENT.pdf --toc --reference-links --toc-depth=3
+pandoc $ARGUMENT.md --template template.latex --listings --pdf-engine=xelatex -o $ARGUMENT.pdf --toc --toc-depth=3 -V colorlinks -M toccolor=blue -M lang=sr -M langserbian=true
 
+#-V links-as-notes=true
 #--reference-links 
 #--number-sections
 #--filter pandoc-crossref

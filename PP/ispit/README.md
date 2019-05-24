@@ -1,13 +1,15 @@
 ---
 title: PP - Beleške za praktični deo ispita
-author: "[github.com/nkoturovic/Programming](http://github.com/nkoturovic/Programming/tree/master/PP/ispit/)"
-date: 22.05.2019.
+author: "[www.github.com/nkoturovic/Programming/tree/master/PP/ispit/](www.github.com/nkoturovic/Programming/tree/master/PP/ispit/)"
+date: \today
 ---
 \vspace{2mm}
 **INFO:** Ispit se sastoji iz dve celine `Scala` i `Prolog` po dva zadatka.
 
 
-**NAPOMENA:** Virtuelnu mašinu sa potrebnim softverom možete preuzeti sa sledećeg linka: [link](https://drive.google.com/file/d/12uPc_a6P1Tc26LeiugR9L4TjADrCXhnu/view)
+**NAPOMENA:** Virtuelnu mašinu sa potrebnim softverom možete preuzeti sa sledećeg linka:
+
+ [https://drive.google.com/file/d/12uPc_a6P1Tc26LeiugR9L4TjADrCXhnu/view](https://drive.google.com/file/d/12uPc_a6P1Tc26LeiugR9L4TjADrCXhnu/view)
 \newpage
 
 # Deo 1 - Scala

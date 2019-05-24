@@ -11,15 +11,15 @@
             left=19mm,right=19mm,top=30mm,bottom=18mm,%
 	    footskip=12mm]{geometry}
 
-\usepackage[english]{babel}
+%\usepackage[Latin]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage[parfill]{parskip}
 \usepackage{indentfirst}
 \setlength{\parindent}{0cm}
 \usepackage[T1]{fontenc}
 
-\usepackage[ddmmyyyy]{datetime}
-\renewcommand{\dateseparator}{.}
+%\usepackage[ddmmyyyy]{datetime}
+%\renewcommand{\dateseparator}{.}
 
 \usepackage{titlesec}
 
@@ -66,11 +66,12 @@
 %\usepackage{graphicx}
 %\graphicspath{ {img/} }
 %\usepackage{wrapfig}
-\renewcommand{\figurename}{\textbf{Slika}}
-\addto\captionsenglish{\renewcommand{\figurename}{\textbf{Slika}}}
-\renewcommand{\lstlistingname}{\textbf{Program}}% Listing -> Algorithm
-\renewcommand{\lstlistlistingname}{\textbf{Lista \lstlistingname a}}
-\addto\captionsenglish{\renewcommand{\contentsname}{Sadržaj}}
+
+$if(langserbian)$
+%\renewcommand{\figurename}{Slika}
+\renewcommand{\lstlistingname}{Program}% Listing -> Program
+\renewcommand{\lstlistlistingname}{Lista \lstlistingname a}
+$endif$
 
 \lstset {
     basicstyle=\fontsize{10.45}{13}\ttfamily,breaklines=true
@@ -106,6 +107,7 @@
 
 \DeclareCaptionFormat{listing}{\hspace{1pt}#1#2#3}
 \captionsetup[lstlisting]{format=listing,singlelinecheck=false,labelsep=colon,labelfont=bf}
+\usepackage[labelfont=bf]{caption} 
 
 % Listing and enumerate around padding
 %\setlength{\fboxsep}{0pt}
@@ -149,14 +151,14 @@
 
 %\usepackage[framemethod=TikZ]{mdframed}
 
-\usepackage{hyperref}
-\hypersetup{
-    colorlinks,
-    citecolor=black,
-    filecolor=blue,
-    linkcolor=blue!85!cyan,
-    urlcolor=blue!85!cyan
-}
+%\usepackage{hyperref}
+%\hypersetup{
+%    colorlinks,
+%    citecolor=black,
+%    filecolor=blue,
+%    linkcolor=blue!85!cyan,
+%    urlcolor=blue!85!cyan
+%}
 
 \usepackage{titling}
 \setlength{\droptitle}{-21mm}
@@ -382,14 +384,14 @@ $if(keywords)$
 $endif$
 $if(colorlinks)$
             colorlinks=true,
-            linkcolor=$if(linkcolor)$$linkcolor$$else$maroon$endif$,
+            linkcolor=$if(linkcolor)$$linkcolor$$else$blue$endif$,
             citecolor=$if(citecolor)$$citecolor$$else$blue$endif$,
             urlcolor=$if(urlcolor)$$urlcolor$$else$blue$endif$,
 $else$
             pdfborder={0 0 0},
 $endif$
             breaklinks=true}
-\urlstyle{same}  % don't use monospace font for urls
+%\urlstyle{same}  % don't use monospace font for urls
 $if(verbatim-in-note)$
 \VerbatimFootnotes % allows verbatim text in footnotes
 $endif$
@@ -523,12 +525,18 @@ $endif$
 \else
   % load polyglossia as late as possible as it *could* call bidi if RTL lang (e.g. Hebrew or Arabic)
   \usepackage{polyglossia}
-  \setmainlanguage[$polyglossia-lang.options$]{$polyglossia-lang.name$}
+ $if(langserbian)$
+    \newfontfamily\cyrillicfont{Inconsolata}[Script=Cyrillic]
+    \setmainlanguage[Script=Latin]{serbian}
+  $else$
+    \setmainlanguage[$polyglossia-lang.options$]{$polyglossia-lang.name$}
+ $endif$
 $for(polyglossia-otherlangs)$
   \setotherlanguage[$polyglossia-otherlangs.options$]{$polyglossia-otherlangs.name$}
 $endfor$
 \fi
 $endif$
+
 $if(dir)$
 \ifxetex
   % load bidi as late as possible as it modifies e.g. graphicx
@@ -558,7 +566,7 @@ $endfor$
 $endif$
 
 $if(title)$
-\title{\textbf{$title$$if(thanks)$\thanks{$thanks$}$endif$}\vspace{-2mm}}
+\title{\textbf{$title$$if(thanks)$\thanks{$thanks$}$endif$}\vspace{-5pt}}
 $endif$
 $if(subtitle)$
 \providecommand{\subtitle}[1]{}
@@ -571,7 +579,9 @@ $if(institute)$
 \providecommand{\institute}[1]{}
 \institute{$for(institute)$$institute$$sep$ \and $endfor$}
 $endif$
-\date{\vspace{-2mm}$date$}
+
+\date{\vspace{-5pt}\textbf{$date$}}
+
 $if(beamer)$
 $if(titlegraphic)$
 \titlegraphic{\includegraphics{$titlegraphic$}}
@@ -580,6 +590,15 @@ $if(logo)$
 \logo{\includegraphics{$logo$}}
 $endif$
 $endif$
+
+%$if(langserbian)$
+%\renewcommand{\contentsname}{Sadržaj}
+%\def\today{\number\day.~\ifcase\month\or
+%    januar\or februar\or mart\or april\or maj\or jun\or
+%    jul\or avgust\or septembar\or oktobar\or novembar\or
+%    decembar\fi
+%    \space\number\year.~}
+%$endif$
 
 \begin{document}
 $if(title)$
@@ -607,8 +626,9 @@ $if(beamer)$
 $else$
 {
 $if(colorlinks)$
-\hypersetup{linkcolor=$if(toccolor)$$toccolor$$else$$endif$}
+\hypersetup{linkcolor=$if(toccolor)$$toccolor$$else$black$endif$}
 $endif$
+
 \setcounter{tocdepth}{$toc-depth$}
 \tableofcontents
 }
