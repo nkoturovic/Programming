@@ -67,7 +67,7 @@
 %\graphicspath{ {img/} }
 %\usepackage{wrapfig}
 
-$if(langserbian)$
+$if(langserbianlatin)$
 %\renewcommand{\figurename}{Slika}
 \renewcommand{\lstlistingname}{Program}% Listing -> Program
 \renewcommand{\lstlistlistingname}{Lista \lstlistingname a}
@@ -525,7 +525,7 @@ $endif$
 \else
   % load polyglossia as late as possible as it *could* call bidi if RTL lang (e.g. Hebrew or Arabic)
   \usepackage{polyglossia}
- $if(langserbian)$
+ $if(langserbianlatin)$
     \newfontfamily\cyrillicfont{Inconsolata}[Script=Cyrillic]
     \setmainlanguage[Script=Latin]{serbian}
   $else$
@@ -591,7 +591,7 @@ $if(logo)$
 $endif$
 $endif$
 
-%$if(langserbian)$
+%$if(langserbianlatin)$
 %\renewcommand{\contentsname}{Sadržaj}
 %\def\today{\number\day.~\ifcase\month\or
 %    januar\or februar\or mart\or april\or maj\or jun\or
