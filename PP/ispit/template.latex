@@ -65,7 +65,7 @@ $endif$
 \lstset {
     basicstyle=\fontsize{9}{11}\ttfamily,breaklines=true
     framesep=5pt,
-    backgroundcolor=\color{lightgray!17},
+    backgroundcolor=\color{lightgray!18},
     %captionpos=0, % sets the caption-position to bottom
     abovecaptionskip=0pt,
     belowcaptionskip=3pt,
