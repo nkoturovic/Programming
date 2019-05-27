@@ -6,7 +6,7 @@
 % i malo jos da se optimizuje, da se
 % uklone upozorenja i slicno
 
-\documentclass[a4paper, 10.5pt, twoside]{article}
+\documentclass[a4paper, 10pt, twoside]{article}
 \usepackage[bindingoffset=0mm,%
             left=19mm,right=19mm,top=30mm,bottom=18mm,%
 	    footskip=12mm]{geometry}
@@ -21,7 +21,8 @@
 %\usepackage[ddmmyyyy]{datetime}
 %\renewcommand{\dateseparator}{.}
 
-\usepackage{titlesec}
+\usepackage[explicit]{titlesec}
+\usepackage{ulem}
 
 %\renewcommand{\thesection}{\hspace*{-0.8cm}}
 %\renewcommand{\thesubsection}{\hspace*{-0.6cm}}
@@ -32,11 +33,11 @@
 \titlespacing\subsection{0pt}{9pt plus 4pt minus 2pt}{8.25pt plus 2pt minus 2pt}
 \titlespacing\subsubsection{0pt}{8.5pt plus 4pt minus 2pt}{8pt plus 2pt minus 2pt}
 
-\titleformat*{\section}{\LARGE\bfseries}
-\titleformat*{\subsection}{\Large\bfseries}
-\titleformat*{\subsubsection}{\large\bfseries}
-\titleformat*{\paragraph}{\normalsize\bfseries}
-\titleformat*{\subparagraph}{\normalsize\bfseries}
+\titleformat{\section}{\Large\bfseries}{\thesection}{1em}{#1}
+\titleformat{\subsection}{\large\bfseries}{\thesubsection}{1em}{#1}
+\titleformat{\subsubsection}{\normalsize\bfseries}{\thesubsubsection}{1em}{\uline{#1}}
+\titleformat{\paragraph}{\normalsize\bfseries}
+\titleformat{\subparagraph}{\normalsize\bfseries}
 
 \usepackage{paralist}
 \usepackage{amsmath}
@@ -74,7 +75,7 @@ $if(langserbianlatin)$
 $endif$
 
 \lstset {
-    basicstyle=\fontsize{9.5}{11.5}\ttfamily,breaklines=true
+    basicstyle=\fontsize{9}{11}\ttfamily,breaklines=true
     framesep=5pt,
     backgroundcolor=\color{lightgray!15},
     %captionpos=0, % sets the caption-position to bottom
