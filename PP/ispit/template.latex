@@ -8,8 +8,8 @@
 
 \documentclass[a4paper, 10pt, twoside]{article}
 \usepackage[bindingoffset=0mm,%
-            left=19mm,right=19mm,top=30mm,bottom=18mm,%
-	    footskip=12mm]{geometry}
+            left=17mm,right=17mm,top=27mm,bottom=17mm,%
+	    footskip=11mm]{geometry}
 
 %\usepackage[Latin]{babel}
 \usepackage[utf8]{inputenc}
@@ -223,10 +223,10 @@ $endif$
 \pagestyle{fancy}
 \renewcommand{\sectionmark}[1]{\markboth{#1}{}} % set the \leftmark
 \fancyhf{}
-\fancyhead[LE]{\textit{\textbf{\thepage}}}
-\fancyhead[RE]{\textit{\textbf{\leftmark}}}
-\fancyhead[LO]{\textit{\textbf{\leftmark}}}
-\fancyhead[RO]{\textit{\textbf{\thepage}}}
+\fancyhead[LE]{\textsl{\textbf{\thepage}}}
+\fancyhead[RE]{\textsl{\textbf{\leftmark}}}
+\fancyhead[LO]{\textsl{\textbf{\leftmark}}}
+\fancyhead[RO]{\textsl{\textbf{\thepage}}}
 \fancyfoot[C]{}
 
 \fancypagestyle{plain}{%
@@ -567,21 +567,21 @@ $endfor$
 $endif$
 
 $if(title)$
-\title{\textbf{$title$$if(thanks)$\thanks{$thanks$}$endif$}\vspace{-5pt}}
+\title{\Large\textbf{$title$$if(thanks)$\thanks{$thanks$}$endif$}\vspace{-5pt}}
 $endif$
 $if(subtitle)$
 \providecommand{\subtitle}[1]{}
 \subtitle{$subtitle$}
 $endif$
 $if(author)$
-\author{$for(author)$$author$$sep$ \and $endfor$}
+\author{$for(author)$\large $author$$sep$ \and $endfor$}
 $endif$
 $if(institute)$
 \providecommand{\institute}[1]{}
 \institute{$for(institute)$$institute$$sep$ \and $endfor$}
 $endif$
 
-\date{\vspace{-5pt}\textbf{$date$}}
+\date{\large\vspace{-5pt}\textbf{$date$}}
 
 $if(beamer)$
 $if(titlegraphic)$
