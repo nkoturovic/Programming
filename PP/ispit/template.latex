@@ -335,6 +335,8 @@ $highlighting-macros$
 $endif$
 $if(tables)$
 \usepackage{longtable,booktabs}
+\setlength{\LTpre}{16pt}
+\setlength{\LTpost}{5pt}
 $if(beamer)$
 \usepackage{caption}
 % These lines are needed to make table captions work with longtable:
