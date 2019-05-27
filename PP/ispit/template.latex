@@ -84,8 +84,8 @@ $endif$
     aboveskip=-12pt,
     belowskip=0pt,
     breaklines=true,
-    xleftmargin=4pt,
-    xrightmargin=4pt,
+    xleftmargin=5pt,
+    xrightmargin=5pt,
     tabsize=4, % sets default tabsize to 4 spaces
     columns=fullflexible,
     showstringspaces=false,

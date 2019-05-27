@@ -37,7 +37,6 @@ object ZdravoSvete {
 ```
 Zdravo, svete!
 ```
-\newpage
 
 ## 1. Zadatak [Scala - Niti]
 ### Niti (threads)
@@ -94,7 +93,6 @@ mapa.synchronized {
 }
 
 ```
-\newpage
 
 ### Java FX (Gui)
 
@@ -144,7 +142,6 @@ object MojaAplikacija {
 ![Izgled aplikacije iz programa \ref{lst:jfxprepis}](jfx-copy.png)
 
 
-\newpage
 
 ## 2. Zadatak [Scala - Spark]
 ### Podešavanje `Scala (Apache) Spark`:
