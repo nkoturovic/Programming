@@ -50,7 +50,7 @@
 %\setlist{nolistsep}
 %\usepackage[shortlabels]{enumitem}
 \usepackage{xltxtra,fontspec,xunicode}
-\setmonofont[Ligatures=NoCommon]{Inconsolata}
+\setmonofont[Scale=1,Ligatures=NoCommon]{Inconsolata}
 
 %\usepackage{graphicx}
 %\graphicspath{ {img/} }
@@ -144,10 +144,10 @@ $endif$
 \pagestyle{fancy}
 \renewcommand{\sectionmark}[1]{\markboth{#1}{}} % set the \leftmark
 \fancyhf{}
-\fancyhead[LE]{\textsl{\textbf{\thepage}}}
-\fancyhead[RE]{\textsl{\textbf{\leftmark}}}
-\fancyhead[LO]{\textsl{\textbf{\leftmark}}}
-\fancyhead[RO]{\textsl{\textbf{\thepage}}}
+\fancyhead[LE]{\rmfamily\bfseries\slshape\thepage}
+\fancyhead[RE]{\rmfamily\bfseries\slshape\leftmark}
+\fancyhead[LO]{\rmfamily\bfseries\slshape\leftmark}
+\fancyhead[RO]{\rmfamily\bfseries\slshape\thepage}
 \fancyfoot[C]{}
 
 \fancypagestyle{plain}{%
@@ -360,7 +360,6 @@ $endif$
 $if(beamer)$
 % Prevent slide breaks in the middle of a paragraph:
 \widowpenalties 1 10000
-\raggedbottom
 $if(section-titles)$
 \setbeamertemplate{part page}{
 \centering
@@ -430,9 +429,9 @@ $if(pagestyle)$
 \pagestyle{$pagestyle$}
 $endif$
 
-\usepackage{float}
 % set default figure placement to htbp
 \makeatletter
+\usepackage{float}
 \def\fps@figure{H}
 \raggedbottom
 \makeatother
