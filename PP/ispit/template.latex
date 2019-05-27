@@ -8,8 +8,8 @@
 
 \documentclass[a4paper, 10pt, twoside]{article}
 \usepackage[bindingoffset=0mm,%
-            left=17mm,right=17mm,top=29mm,bottom=15mm,%
-	    footskip=11mm]{geometry}
+            left=17mm,right=17mm,top=26.8mm,bottom=10.6mm,%
+	    footskip=10.6mm]{geometry}
 
 %\usepackage[Latin]{babel}
 \usepackage[utf8]{inputenc}
@@ -52,18 +52,6 @@
 \usepackage{xltxtra,fontspec,xunicode}
 \setmonofont[Ligatures=NoCommon]{Inconsolata}
 
-% No Spacing Itemize
-\usepackage{paralist}
-  \let\itemize\compactitem
-  \let\enditemize\endcompactitem
-  \let\enumerate\compactenum
-  \let\endenumerate\endcompactenum
-  \let\description\compactdesc
-  \let\enddescription\endcompactdesc
-  \pltopsep=\medskipamount
-  \plitemsep=1pt
-  \plparsep=1pt
-
 %\usepackage{graphicx}
 %\graphicspath{ {img/} }
 %\usepackage{wrapfig}
@@ -104,7 +92,6 @@ $endif$
 
 \setlength{\belowcaptionskip}{-8pt}
 \setlength{\abovecaptionskip}{7pt}
-\setlength{\textfloatsep}{20mm}
 
 \DeclareCaptionFormat{listing}{\hspace{1pt}#1#2#3}
 \captionsetup[lstlisting]{format=listing,singlelinecheck=false,labelsep=colon,labelfont=bf}
@@ -116,17 +103,16 @@ $endif$
 \let\savedenditemize=\enditemize
 \makeatletter
 \renewenvironment{itemize}
-{\ifnum \@listdepth=0\vspace{-3mm}\fi\saveditemize}
-{\savedenditemize\ifnum\@listdepth=0\fi\vspace{-3mm}}
+{\ifnum \@listdepth=0\vspace{-1mm}\fi\saveditemize}
+{\savedenditemize\ifnum\@listdepth=0\fi\vspace{-1mm}}
 
 %\setlength{\fboxsep}{0pt}
 \let\savedenumerate=\enumerate
 \let\savedendenumerate=\endenumerate
 \makeatletter
 \renewenvironment{enumerate}
-{\ifnum \@listdepth=0\vspace{-3mm}\fi\savedenumerate}
-{\savedendenumerate\ifnum\@listdepth=0\fi\vspace{-3mm}}
-
+{\ifnum \@listdepth=0\vspace{-1mm}\fi\savedenumerate}
+{\savedendenumerate\ifnum\@listdepth=0\fi\vspace{-1mm}}
 
   %\lstset{
   %      language=customcpp,
@@ -150,73 +136,8 @@ $endif$
   %      %otherkeywords={define,\# }
   %}
 
-%\usepackage[framemethod=TikZ]{mdframed}
-
-%\usepackage{hyperref}
-%\hypersetup{
-%    colorlinks,
-%    citecolor=black,
-%    filecolor=blue,
-%    linkcolor=blue!85!cyan,
-%    urlcolor=blue!85!cyan
-%}
-
 \usepackage{titling}
 \setlength{\droptitle}{-21mm}
-
-%\newcommand{\scode}[3] {
-%	\hspace{.06\textwidth}
-%	\begin{minipage}[t]{.88\textwidth} % Width (ex. .475)
-%		\begin{mdframed}[topline=true,bottomline=true,leftline=true,rightline=true,backgroundcolor=gray!22, linecolor=gray!60!black,roundcorner=1mm]
-%			\lstinputlisting[caption="", label=lst:#3, language=customc]{./primeri/#1}
-%
-%	\begin{center}
-%		\caption{\textbf{Primer \ref{lst:#3}:} #2}
-%	\end{center}
-%	\end{mdframed}
-%	\end{minipage}
-%
-%}
-%
-%\newcommand{\stdio}[4] {
-%	\hspace{.06\textwidth}
-%	\begin{minipage}[t]{.88\textwidth} % Width (ex. .475)
-%		\begin{mdframed}[backgroundcolor=black!7,topline=true,bottomline=true,leftline=true,rightline=true,roundcorner=1mm]
-%		\begin{minipage}[t]{.5\textwidth} % Width (ex. .475)
-%			\textbf{#1} \\
-%				\texttt{#3}
-%		\end{minipage}
-%		\begin{minipage}[t]{.5\textwidth} % Width (ex. .475)
-%			\textbf{#2} \\
-%				\texttt{#4}
-%		\end{minipage}
-%		\end{mdframed}
-%	\end{minipage}
-%	\vspace{3mm}
-%}
-%
-%\newcommand{\syscall}[5] {
-%		\vspace{2mm}
-%	\begin{mdframed}[backgroundcolor=lightgray!20,topline=true,bottomline=true,leftline=true,rightline=true,roundcorner=1mm]
-%		{\Large{\texttt{#1} --- #2}}
-%		\hline
-%
-%		\texttt{#3}
-%		\vspace{2mm}
-%		\hline
-%
-%		#4
-%
-%		\vspace{2mm}
-%		\hline
-%		\textbf{Povratna vrednost: }#5
-%		\vspace{2mm}
-%		%\hline
-%
-%	\end{mdframed}
-%	\vspace{2mm}
-%}
-
 
 \usepackage{fancyhdr}
 
@@ -509,9 +430,11 @@ $if(pagestyle)$
 \pagestyle{$pagestyle$}
 $endif$
 
+\usepackage{float}
 % set default figure placement to htbp
 \makeatletter
-\def\fps@figure{htbp}
+\def\fps@figure{H}
+\raggedbottom
 \makeatother
 
 $for(header-includes)$
