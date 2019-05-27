@@ -67,7 +67,7 @@ $endif$
     framesep=5pt,
     backgroundcolor=\color{lightgray!15},
     %captionpos=0, % sets the caption-position to bottom
-    abovecaptionskip=2pt,
+    abovecaptionskip=0pt,
     belowcaptionskip=3pt,
     aboveskip=-12pt,
     belowskip=0pt,
@@ -90,7 +90,7 @@ $endif$
     %rulecolor=\color{gray!65!black}
 }
 
-\setlength{\belowcaptionskip}{-8pt}
+\setlength{\belowcaptionskip}{-10pt}
 \setlength{\abovecaptionskip}{7pt}
 
 \DeclareCaptionFormat{listing}{\hspace{1pt}#1#2#3}
@@ -103,16 +103,16 @@ $endif$
 \let\savedenditemize=\enditemize
 \makeatletter
 \renewenvironment{itemize}
-{\ifnum \@listdepth=0\vspace{-1mm}\fi\saveditemize}
-{\savedenditemize\ifnum\@listdepth=0\fi\vspace{-1mm}}
+{\ifnum \@listdepth=0\vspace{0mm}\fi\saveditemize}
+{\savedenditemize\ifnum\@listdepth=0\fi\vspace{0mm}}
 
 %\setlength{\fboxsep}{0pt}
 \let\savedenumerate=\enumerate
 \let\savedendenumerate=\endenumerate
 \makeatletter
 \renewenvironment{enumerate}
-{\ifnum \@listdepth=0\vspace{-1mm}\fi\savedenumerate}
-{\savedendenumerate\ifnum\@listdepth=0\fi\vspace{-1mm}}
+{\ifnum \@listdepth=0\vspace{0mm}\fi\savedenumerate}
+{\savedendenumerate\ifnum\@listdepth=0\fi\vspace{0mm}}
 
   %\lstset{
   %      language=customcpp,
