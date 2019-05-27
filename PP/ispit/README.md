@@ -142,7 +142,6 @@ object MojaAplikacija {
 ![Izgled aplikacije iz programa \ref{lst:jfxprepis}](jfx-copy.png)
 
 
-
 ## 2. Zadatak [Scala - Spark]
 ### Podešavanje `Scala (Apache) Spark`:
 Pre nego što počnete sa radom, potrebno je izmeniti fajl `build.sbt`

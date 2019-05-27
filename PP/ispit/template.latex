@@ -8,7 +8,7 @@
 
 \documentclass[a4paper, 10pt, twoside]{article}
 \usepackage[bindingoffset=0mm,%
-            left=17mm,right=17mm,top=27mm,bottom=17mm,%
+            left=17mm,right=17mm,top=29mm,bottom=15mm,%
 	    footskip=11mm]{geometry}
 
 %\usepackage[Latin]{babel}
@@ -102,7 +102,7 @@ $endif$
     %rulecolor=\color{gray!65!black}
 }
 
-\setlength{\belowcaptionskip}{-10pt}
+\setlength{\belowcaptionskip}{-8pt}
 \setlength{\abovecaptionskip}{7pt}
 \setlength{\textfloatsep}{20mm}
 
