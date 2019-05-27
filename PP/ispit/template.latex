@@ -28,9 +28,9 @@
 %\renewcommand{\thesubsubsection}{\hspace*{-0.4cm}}
 
 %\titlespacing{command}{left spacing}{before spacing}{after spacing}[right]
-\titlespacing\section{0pt}{12pt plus 4pt minus 2pt}{8.2pt plus 2pt minus 2pt}
-\titlespacing\subsection{0pt}{12pt plus 4pt minus 2pt}{8.2pt plus 2pt minus 2pt}
-\titlespacing\subsubsection{0pt}{12pt plus 4pt minus 2pt}{8pt plus 2pt minus 2pt}
+\titlespacing\section{0pt}{9pt plus 4pt minus 2pt}{8.25pt plus 2pt minus 2pt}
+\titlespacing\subsection{0pt}{9pt plus 4pt minus 2pt}{8.25pt plus 2pt minus 2pt}
+\titlespacing\subsubsection{0pt}{8.5pt plus 4pt minus 2pt}{8pt plus 2pt minus 2pt}
 
 \titleformat*{\section}{\LARGE\bfseries}
 \titleformat*{\subsection}{\Large\bfseries}
