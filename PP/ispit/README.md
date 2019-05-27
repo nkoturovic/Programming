@@ -1,6 +1,6 @@
 ---
 title: PP - Beleške za praktični deo ispita
-author: "[www.github.com/nkoturovic/Programming/tree/master/PP/ispit/](www.github.com/nkoturovic/Programming/tree/master/PP/ispit/)"
+author: "[www.github.com/nkoturovic/Programming](www.github.com/nkoturovic/Programming)"
 date: \today
 ---
 \vspace{2mm}

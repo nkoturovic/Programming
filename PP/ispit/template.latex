@@ -6,7 +6,7 @@
 % i malo jos da se optimizuje, da se
 % uklone upozorenja i slicno
 
-\documentclass[a4paper, 11pt, twoside]{article}
+\documentclass[a4paper, 10.5pt, twoside]{article}
 \usepackage[bindingoffset=0mm,%
             left=19mm,right=19mm,top=30mm,bottom=18mm,%
 	    footskip=12mm]{geometry}
@@ -28,15 +28,15 @@
 %\renewcommand{\thesubsubsection}{\hspace*{-0.4cm}}
 
 %\titlespacing{command}{left spacing}{before spacing}{after spacing}[right]
-\titlespacing\section{0pt}{12pt plus 4pt minus 2pt}{14pt plus 2pt minus 2pt}
-\titlespacing\subsection{0pt}{12pt plus 4pt minus 2pt}{11pt plus 2pt minus 2pt}
-\titlespacing\subsubsection{0pt}{12pt plus 4pt minus 2pt}{9pt plus 2pt minus 2pt}
+\titlespacing\section{0pt}{12pt plus 4pt minus 2pt}{8.2pt plus 2pt minus 2pt}
+\titlespacing\subsection{0pt}{12pt plus 4pt minus 2pt}{8.2pt plus 2pt minus 2pt}
+\titlespacing\subsubsection{0pt}{12pt plus 4pt minus 2pt}{8pt plus 2pt minus 2pt}
 
 \titleformat*{\section}{\LARGE\bfseries}
 \titleformat*{\subsection}{\Large\bfseries}
 \titleformat*{\subsubsection}{\large\bfseries}
-\titleformat*{\paragraph}{\large\bfseries}
-\titleformat*{\subparagraph}{\large\bfseries}
+\titleformat*{\paragraph}{\normalsize\bfseries}
+\titleformat*{\subparagraph}{\normalsize\bfseries}
 
 \usepackage{paralist}
 \usepackage{amsmath}
@@ -49,7 +49,7 @@
 %\setlist{nolistsep}
 %\usepackage[shortlabels]{enumitem}
 \usepackage{xltxtra,fontspec,xunicode}
-\setmonofont[Scale=0.95,Ligatures=NoCommon]{Inconsolata}
+\setmonofont[Ligatures=NoCommon]{Inconsolata}
 
 % No Spacing Itemize
 \usepackage{paralist}
@@ -74,12 +74,12 @@ $if(langserbianlatin)$
 $endif$
 
 \lstset {
-    basicstyle=\fontsize{10.45}{13}\ttfamily,breaklines=true
+    basicstyle=\fontsize{9.5}{11.5}\ttfamily,breaklines=true
     framesep=5pt,
     backgroundcolor=\color{lightgray!15},
     %captionpos=0, % sets the caption-position to bottom
     abovecaptionskip=2pt,
-    belowcaptionskip=4pt,
+    belowcaptionskip=3pt,
     aboveskip=-12pt,
     belowskip=0pt,
     breaklines=true,
