@@ -8,8 +8,8 @@
 
 \documentclass[a4paper, 10pt, twoside]{article}
 \usepackage[bindingoffset=0mm,%
-            left=17mm,right=17mm,top=26.8mm,bottom=10.6mm,%
-	    footskip=10.6mm]{geometry}
+            left=17mm,right=17mm,top=26mm,bottom=11mm,%
+	    footskip=11mm]{geometry}
 
 %\usepackage[Latin]{babel}
 \usepackage[utf8]{inputenc}
@@ -144,10 +144,10 @@ $endif$
 \pagestyle{fancy}
 \renewcommand{\sectionmark}[1]{\markboth{#1}{}} % set the \leftmark
 \fancyhf{}
-\fancyhead[LE]{\normalsize\rmfamily\bfseries\slshape\thepage}
-\fancyhead[RE]{\normalsize\rmfamily\bfseries\slshape\leftmark}
-\fancyhead[LO]{\normalsize\rmfamily\bfseries\slshape\leftmark}
-\fancyhead[RO]{\normalsize\rmfamily\bfseries\slshape\thepage}
+\fancyhead[LE]{\small\rmfamily\bfseries\slshape\thepage}
+\fancyhead[RE]{\small\rmfamily\bfseries\slshape\leftmark}
+\fancyhead[LO]{\small\rmfamily\bfseries\slshape\leftmark}
+\fancyhead[RO]{\small\rmfamily\bfseries\slshape\thepage}
 \fancyfoot[C]{}
 
 \fancypagestyle{plain}{%
