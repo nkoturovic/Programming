@@ -335,8 +335,12 @@ $highlighting-macros$
 $endif$
 $if(tables)$
 \usepackage{longtable,booktabs}
-\setlength{\LTpre}{16pt}
+\setlength{\LTpre}{15pt}
 \setlength{\LTpost}{5pt}
+\captionsetup[longtable]{
+    aboveskip=3pt,
+    belowskip=-5pt
+}
 $if(beamer)$
 \usepackage{caption}
 % These lines are needed to make table captions work with longtable:
@@ -409,6 +413,11 @@ $endif$
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 $if(numbersections)$
 \setcounter{secnumdepth}{$if(secnumdepth)$$secnumdepth$$else$5$endif$}
+\titleformat{\subsubsection}{\normalsize\bfseries}{\thesubsubsection}{1em}{#1}
+\usepackage{chngcntr}
+\counterwithin{figure}{section}
+\counterwithin{table}{section}
+\AtBeginDocument{\counterwithin{lstlisting}{section}}
 $else$
 \setcounter{secnumdepth}{0}
 $endif$
