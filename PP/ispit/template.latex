@@ -137,7 +137,7 @@ $endif$
   %}
 
 \usepackage{titling}
-\setlength{\droptitle}{-21mm}
+\setlength{\droptitle}{-16mm}
 
 \usepackage{fancyhdr}
 
@@ -514,7 +514,7 @@ $if(institute)$
 \institute{$for(institute)$$institute$$sep$ \and $endfor$}
 $endif$
 
-\date{\large\vspace{-5pt}\textsl{$date$}}
+\date{\normalsize\vspace{-5pt}\textsl{$date$}}
 
 $if(beamer)$
 $if(titlegraphic)$
