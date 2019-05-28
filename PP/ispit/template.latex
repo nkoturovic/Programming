@@ -103,7 +103,7 @@ $endif$
 \let\savedenditemize=\enditemize
 \makeatletter
 \renewenvironment{itemize}
-{\ifnum \@listdepth=0\vspace{0mm}\fi\saveditemize}
+{\ifnum \@listdepth=0\vspace{-1pt}\fi\saveditemize}
 {\savedenditemize\ifnum\@listdepth=0\fi\vspace{0mm}}
 
 %\setlength{\fboxsep}{0pt}
@@ -111,7 +111,7 @@ $endif$
 \let\savedendenumerate=\endenumerate
 \makeatletter
 \renewenvironment{enumerate}
-{\ifnum \@listdepth=0\vspace{0mm}\fi\savedenumerate}
+{\ifnum \@listdepth=0\vspace{-1pt}\fi\savedenumerate}
 {\savedendenumerate\ifnum\@listdepth=0\fi\vspace{0mm}}
 
   %\lstset{
