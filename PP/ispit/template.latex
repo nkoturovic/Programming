@@ -80,14 +80,14 @@ $endif$
     keywordstyle=\bfseries\color{blue!65},
     commentstyle=\itshape\color{green!55!black},
     identifierstyle=\color{black},
-    stringstyle=\color{orange!75!black},
+    stringstyle=\color{orange!77!black},
     %framextopmargin=-13pt,
     %framexbottommargin=-13pt,
     %framexleftmargin=-13pt,
     %framexrightmargin=-13pt,
     frame=single, % adds a frame around the code
     captionpos=t,
-    rulecolor=\color{gray!50!black}
+    rulecolor=\color{gray!57!black}
 }
 
 \setlength{\belowcaptionskip}{-10pt}
