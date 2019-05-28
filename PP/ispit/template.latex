@@ -80,7 +80,7 @@ $endif$
     keywordstyle=\bfseries\color{blue!65},
     commentstyle=\itshape\color{green!55!black},
     identifierstyle=\color{black},
-    stringstyle=\color{orange!85!black},
+    stringstyle=\color{orange!75!black},
     %framextopmargin=-13pt,
     %framexbottommargin=-13pt,
     %framexleftmargin=-13pt,
