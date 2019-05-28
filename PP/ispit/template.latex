@@ -144,10 +144,10 @@ $endif$
 \pagestyle{fancy}
 \renewcommand{\sectionmark}[1]{\markboth{#1}{}} % set the \leftmark
 \fancyhf{}
-\fancyhead[LE]{\rmfamily\bfseries\slshape\thepage}
-\fancyhead[RE]{\rmfamily\bfseries\slshape\leftmark}
-\fancyhead[LO]{\rmfamily\bfseries\slshape\leftmark}
-\fancyhead[RO]{\rmfamily\bfseries\slshape\thepage}
+\fancyhead[LE]{\normalsize\rmfamily\bfseries\slshape\thepage}
+\fancyhead[RE]{\normalsize\rmfamily\bfseries\slshape\leftmark}
+\fancyhead[LO]{\normalsize\rmfamily\bfseries\slshape\leftmark}
+\fancyhead[RO]{\normalsize\rmfamily\bfseries\slshape\thepage}
 \fancyfoot[C]{}
 
 \fancypagestyle{plain}{%
