@@ -126,7 +126,7 @@ class GuiAplikacija extends Application {
 
          /* Akcije */
          btn.setOnAction(e => {
-         tf2.setText(tf1.getText())
+             tf2.setText(tf1.getText())
          })
 
          primaryStage.setScene(new Scene(root, 800, 600))
