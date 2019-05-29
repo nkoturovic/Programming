@@ -70,7 +70,7 @@ $endif$
     abovecaptionskip=0pt,
     belowcaptionskip=3pt,
     aboveskip=-12pt,
-    belowskip=0pt,
+    belowskip=-1pt,
     breaklines=true,
     xleftmargin=5pt,
     xrightmargin=5pt,
