@@ -69,8 +69,8 @@ $endif$
     %captionpos=0, % sets the caption-position to bottom
     abovecaptionskip=0pt,
     belowcaptionskip=3pt,
-    aboveskip=-12pt,
-    belowskip=-1pt,
+    aboveskip=-10pt,
+    belowskip=1pt,
     breaklines=true,
     xleftmargin=5pt,
     xrightmargin=5pt,
