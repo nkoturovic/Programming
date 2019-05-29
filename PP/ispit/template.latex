@@ -105,16 +105,16 @@ $endif$
 \let\savedenditemize=\enditemize
 \makeatletter
 \renewenvironment{itemize}
-{\ifnum \@listdepth=0\vspace{-8pt}\fi\begin{multicols}{2}\saveditemize}
-{\savedenditemize\ifnum\@listdepth=0\fi\end{multicols}\vspace{-7pt}}
+{\ifnum \@listdepth=0\vspace{-6pt}\fi\begin{multicols}{2}\saveditemize}
+{\savedenditemize\ifnum\@listdepth=0\fi\end{multicols}\vspace{-8pt}}
 
 %\setlength{\fboxsep}{0pt}
 \let\savedenumerate=\enumerate
 \let\savedendenumerate=\endenumerate
 \makeatletter
 \renewenvironment{enumerate}
-{\ifnum \@listdepth=0\vspace{-8pt}\fi\begin{multicols}{2}\savedenumerate}
-{\savedendenumerate\ifnum\@listdepth=0\fi\end{multicols}\vspace{-7pt}}
+{\ifnum \@listdepth=0\vspace{-6pt}\fi\begin{multicols}{2}\savedenumerate}
+{\savedendenumerate\ifnum\@listdepth=0\fi\end{multicols}\vspace{-8pt}}
 
 
   %\lstset{
