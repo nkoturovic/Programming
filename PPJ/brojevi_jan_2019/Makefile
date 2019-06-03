@@ -1,12 +1,9 @@
 GOAL = brojevi
 CXX = g++
-CXXFLAGS = -std=c++14 -Wall -Wextra
+CXXFLAGS = -std=c++14 -Wall -Wextra -g
 
-$(GOAL): lex.yy.o parser.tab.o List.o
+$(GOAL): lex.yy.o parser.tab.o
 	$(CXX) -o $@ $^
-
-List.o: List.cpp List.hpp
-	$(CXX) $(CXXFLAGS) -c $<
 
 parser.tab.o: parser.tab.cpp parser.tab.hpp
 	$(CXX) $(CXXFLAGS) -c -o $@ $<

@@ -25,7 +25,6 @@ std::map <char, Kvaternion> tablica;
 %token dodela_token
 %token <float_type> broj_token
 %token <char_type> id_token komp_id_token komp_print_id_token
-%token <kvaternion_type>
 
 %type <float_type> Broj
 %type <kvaternion_type> E
