@@ -24,7 +24,8 @@ class Student(Person):
 __new__(cls, other) - To get called in an object's instantiation.
 __init__(self, other) - To get called by the __new__ method.
 __del__(self) - Destructor method.
-Unary operators and functions 	Description
+
+## Unary operators and functions Description
 __pos__(self) - To get called for unary positive e.g. +someobject.
 __neg__(self) - To get called for unary negative e.g. -someobject.
 __abs__(self) - To get called by built-in abs() function.
@@ -33,7 +34,8 @@ __round__(self,n) 	To get called by built-in round() function.
 __floor__(self) - To get called by built-in math.floor() function.
 __ceil__(self) - To get called by built-in math.ceil() function.
 __trunc__(self) - To get called by built-in math.trunc() function.
-Augmented Assignment 	Description
+
+## Augmented Assignment	Description
 __iadd__(self, other) - To get called on addition with assignment e.g. a +=b.
 __isub__(self, other) - To get called on subtraction with assignment e.g. a -=b.
 __imul__(self, other) - To get called on multiplication with assignment e.g. a *=b.
@@ -47,7 +49,8 @@ __irshift__(self, other) - To get called on right bitwise shift with assignment 
 __iand__(self, other) - To get called on bitwise AND with assignment e.g. a&=b.
 __ior__(self, other) - To get called on bitwise OR with assignment e.g. a|=b.
 __ixor__(self, other) - To get called on bitwise XOR with assignment e.g. a ^=b.
-Type Conversion Magic Methods 	Description
+
+## Type Conversion Magic Methods Description
 __int__(self) - To get called by built-int int() method to convert a type to an int.
 __float__(self) - To get called by built-int float() method to convert a type to float.
 __complex__(self) - To get called by built-int complex() method to convert a type to complex.
@@ -55,7 +58,8 @@ __oct__(self) - To get called by built-int oct() method to convert a type to oct
 __hex__(self) - To get called by built-int hex() method to convert a type to hexadecimal.
 __index__(self) - To get called on type conversion to an int when the object is used in a slice expression.
 __trunc__(self) - To get called from math.trunc() method.
-String Magic Methods 	Description
+
+## String Magic Methods Description
 __str__(self) - To get called by built-int str() method to return a string representation of a type.
 __repr__(self) - To get called by built-int repr() method to return a machine readable representation of a type.
 __unicode__(self) - To get called by built-int unicode() method to return an unicode string of a type.
@@ -64,11 +68,13 @@ __hash__(self) - To get called by built-int hash() method to return an integer.
 __nonzero__(self) - To get called by built-int bool() method to return True or False.
 __dir__(self) - To get called by built-int dir() method to return a list of attributes of a class.
 __sizeof__(self) - To get called by built-int sys.getsizeof() method to return the size of an object.
-Attribute Magic Methods 	Description
+
+## Attribute Magic Methods Description
 __getattr__(self, name) - Is called when the accessing attribute of a class that does not exist.
 __setattr__(self, name, value) - Is called when assigning a value to the attribute of a class.
 __delattr__(self, name) - Is called when deleting an attribute of a class.
-Operator Magic Methods 	Description
+
+## Operator Magic Methods Description
 __add__(self, other) - To get called on add operation using + operator
 __sub__(self, other) - To get called on subtraction operation using - operator.
 __mul__(self, other) - To get called on multiplication operation using * operator.
