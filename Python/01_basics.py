@@ -148,6 +148,9 @@ Python je strava bla bla bla"""
 
 upisi_u_datoteku('izlaz.txt', tekst)
 
+# Takes only first element from generator that matches condition (lazely)
+next((n for n in range(1,100) if n % 5 == 0), None)
+
 # Main function (Python as a script) ./script.py
 def main():
     print('Hello world')

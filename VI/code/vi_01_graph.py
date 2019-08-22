@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 class Graph:
     def __init__(self, adj_list):
         self.adj_list = adj_list
