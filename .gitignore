@@ -41,3 +41,7 @@ stack.hh
 
 # Other
 *.pdf
+
+# Python related
+__pycache__/
+*.py[cod]

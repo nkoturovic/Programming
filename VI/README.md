@@ -115,7 +115,7 @@ def bfs(graph, start, stop):
     return None # trazeni put ne postoji
 ```
 
-### BFS i DFS primer
+### DFS i BFS primer
 
 Primenićemo BFS i DFS algoritam na primeru pretrage puta od čvora `1` do čvora `6`.
 
@@ -136,7 +136,6 @@ Primenićemo BFS i DFS algoritam na primeru pretrage puta od čvora `1` do čvor
     \draw[edge_style]  (v1) edge (v5);
     \draw[edge_style]  (v3) edge (v2);
     \draw[edge_style]  (v4) edge (v3);
-    \draw[edge_style]  (v6) edge (v3);
     \draw[edge_style]  (v4) edge (v5);
     \draw[edge_style]  (v4) edge (v6);
     \draw[edge_style]  (v5) edge (v6);
@@ -146,10 +145,10 @@ Primenićemo BFS i DFS algoritam na primeru pretrage puta od čvora `1` do čvor
 ```python
 graph = Graph({'1': ['2', '3', '4','5'],
                  '2': ['1', '3'],
-                 '3': ['1', '2', '4', '6'],
+                 '3': ['1', '2', '4'],
                  '4': ['1', '3', '5', '6'],
                  '5': ['1', '4', '6'],
-                 '6': ['3', '4', '5']})
+                 '6': ['4', '5']})
 
 print('dfs:', dfs(graph, '1', '6'))
 print('bfs:', bfs(graph, '1', '6'))
@@ -209,10 +208,28 @@ def dijkstra(graph, start, stop):
     return None, None
 ```
 
-## Dijkstrin algoritam primer
+### Dijkstrin algoritam primer
 
 Primenićemo Dijkstrin algoritam da nađemo najkraći put od čvora `1` do čvora `6` u sledećem grafu.
 
+```python
+graph = Graph({'1': [('2', 1), ('3', 3), ('4', 4), ('5', 3)],
+                 '2': [('1', 1), ('3', 1)],
+                 '3': [('1', 3), ('2', 1), ('4', 1)],
+                 '4': [('1', 4), ('3', 1), ('5', 1), ('6', 1)],
+                 '5': [('1', 3), ('4', 1), ('6', 2)],
+                 '6': [('4', 1), ('5', 2)]})
+
+put, rastojanje = dijkstra(graph, '1', '6')
+print('Put:', put)
+print('Rastojanje:', rastojanje)
+```
+\begin{verbatim}
+Put: ['1', '2', '3', '4', '6']
+Rastojanje: 4
+\end{verbatim}
+
+\begin{figure}
 \begin{center}
 \begin{tikzpicture}[scale=0.65,shorten >=1pt, auto, node distance=1cm,
    node_style/.style={circle,draw=black,fill=blue!20,font=\sffamily\large},
@@ -230,30 +247,341 @@ Primenićemo Dijkstrin algoritam da nađemo najkraći put od čvora `1` do čvor
     \draw[edge_style]  (v1) edge node{3} (v5);
     \draw[edge_style]  (v3) edge[color=red, text=black, ultra thick] node{1} (v2);
     \draw[edge_style]  (v4) edge[color=red, text=black, ultra thick] node{1} (v3);
-    \draw[edge_style]  (v6) edge node{3} (v3);
     \draw[edge_style]  (v4) edge node{1} (v5);
     \draw[edge_style]  (v4) edge[color=red, text=black, ultra thick] node{1} (v6);
     \draw[edge_style]  (v5) edge node{2} (v6);
 \end{tikzpicture}
 \end{center}
+\caption{Put pronađen Dijkstrinim algoritmom} \label{fig:dijkstra-tikz}
+\end{figure}
+
+
+## Pohlepni algoritam
+
+
+```{.python caption="Pohlepni algoritam"}
+def greedy(graph, start, stop, heuristic):
+    parent = { start : start }
+
+    # tekuci cvor n postavi na polazni cvor
+    n = start
+    distance = 0
+
+    # ponavljaj beskonacno
+    while True:
+        # ako se vratimo u vec posecen
+        # cvor upali smo u besk. petlju
+        if n != start and n in parent.values():
+            return None, None
+        
+        # ako je n ciljni cvor
+        if n == stop:
+            # konstruisi put i vrati uspeh
+            path = []
+            while parent[n] != n:
+                path.append(n)                
+                n = parent[n]
+
+            path.append(start)
+            path.reverse()
+            return path, distance 
+
+        # ako nema direktno dostupnih cvorova
+        n_neighbors = graph.get_neighbors(n)
+        if len(n_neighbors) == 0:
+            # izvesti u o neuspehu
+            return None, None
+
+        # od dostupnih cvorova izaberi cvor 
+        # sa najboljom heuristickom. ocenom
+        m = min(n_neighbors, key=lambda e: heuristic(e[0]))
+        distance += m[1]
+        parent[m[0]] = n
+        n = m[0]
+
+    return (None, None)
+
+```
+
+### Pohlepni algoritam primer
+
+Primenićemo pohlepni algoritam da pokušamo da nađemo put od čvora `1` do čvora `6` u sledećem grafu.
 
 ```python
 graph = Graph({'1': [('2', 1), ('3', 3), ('4', 4), ('5', 3)],
-                 '2': [('1', 1), ('3', 1)],
-                 '3': [('1', 3), ('2', 1), ('4', 1), ('6', 3)],
-                 '4': [('1', 4), ('3', 1), ('5', 1), ('6', 1)],
-                 '5': [('1', 3), ('4', 1), ('6', 2)],
-                 '6': [('3', 3), ('4', 1), ('5', 2)]})
+                   '2': [('1', 1), ('3', 1)],
+                   '3': [('1', 3), ('2', 1), ('4', 1)],
+                   '4': [('1', 4), ('3', 1), ('5', 1), ('6', 1)],
+                   '5': [('1', 3), ('4', 1), ('6', 2)],
+                   '6': [('4', 1), ('5', 2)]})
 
-put, rastojanje = dijkstra(graph, '1', '6')
-print('Put:', put)
-print('Rastojanje:', rastojanje)
+    # heuristika
+    h = {'1' : 2,
+         '2' : 2,
+         '3' : 1,
+         '4' : 1,
+         '5' : 1,
+         '6' : 0 }
+
+    heuristic = lambda e: h[e]
+
+    put, rastojanje = greedy(graph, '1', '6', heuristic)
+    print('Put:', put)
+    print('Rastojanje:', rastojanje)
+```
+\begin{verbatim}
+Put: ['1', '3', '4', '6']
+Rastojanje: 5
+\end{verbatim}
+
+
+\begin{figure}
+\begin{center}
+\begin{tikzpicture}[scale=0.65,shorten >=1pt, auto, node distance=1cm,
+   node_style/.style={circle,draw=black,fill=blue!20,font=\sffamily\large},
+   edge_style/.style={draw=black,thick}]
+
+    \node[node_style, fill=green!20] (v1) at (-3,2) {1};
+    \node[node_style] (v2) at (-6,0) {2};
+    \node[node_style] (v3) at (-3,-2) {3};
+    \node[node_style] (v4) at (0,0) {4};
+    \node[node_style] (v5) at (3,2) {5};
+    \node[node_style, fill=red!20] (v6) at (3,-2) {6};
+    \draw[edge_style]  (v2) edge node{1} (v1);
+    \draw[edge_style]  (v3) edge[color=red, text=black, ultra thick] node{3} (v1);
+    \draw[edge_style]  (v4) edge node{4} (v1);
+    \draw[edge_style]  (v1) edge node{3} (v5);
+    \draw[edge_style]  (v3) edge node{1} (v2);
+    \draw[edge_style]  (v4) edge[color=red, text=black, ultra thick] node{1} (v3);
+    \draw[edge_style]  (v4) edge node{1} (v5);
+    \draw[edge_style]  (v4) edge[color=red, text=black, ultra thick] node{1} (v6);
+    \draw[edge_style]  (v5) edge node{1} (v6);
+\end{tikzpicture}
+\caption{Put pronađen Pohlepnim algoritmom} \label{fig:pohlepni-tikz}
+\end{center}
+\end{figure}
+
+
+## Algoritam - Prvo najbolji
+
+
+```{.python caption="Prvo najbolji"}
+def best_first(graph, start, stop, heuristic):
+    open_list = [start]
+    closed_list = []
+    distance = {k : float('inf') for k in graph.adj_list.keys()}
+    distance[start] = 0
+    parent = {start : start}
+
+    while len(open_list) > 0:
+
+        # iz otvorene liste uzmi cvor sa najboljom ocenom f(x)
+        f = lambda x: heuristic(x) # f(x) je heuristicka procena udaljenosti
+        open_list.sort(key=lambda x: f(x))
+        n = open_list[0]
+
+        # ako je n ciljni cvor
+        if  n == stop:
+            # konstrisi put i vrati ga kao rezultat
+            path = []
+            while parent[n] != n:
+                path.append(n)
+                n = parent[n]
+
+            path.append(start)
+            path.reverse()
+            return path, distance[stop]
+
+        # za svaki m dir. dostupan iz n 
+        for m, weight in graph.get_neighbors(n):
+            # ako m nije ni u otv. ni u zatv listi
+            if m not in closed_list and m not in open_list:
+                # dodaj m u otv. listu i oznaci n kao roditelja
+                open_list.append(m)
+                parent[m] = n
+                n_to_m = next(x[1] for x in graph.get_neighbors(n) if x[0] == m)
+                distance[m] = distance[n] + n_to_m
+
+        # izbaci n iz otvorene liste i dodaj ga u zatvorenu
+        n = open_list.pop(0)
+        closed_list.append(n)
+
+    return None, None
+
+```
+
+### Algoritam - Prvo najbolji primer
+
+Primenićemo algoritam prvo najbolji da nađemo put od čvora `1` do čvora `6` ako postoji u sledećem grafu.
+
+```python
+graph = Graph({'1': [('2', 1), ('3', 3), ('4', 4), ('5', 3)],
+                   '2': [('1', 1), ('3', 1)],
+                   '3': [('1', 3), ('2', 1), ('4', 1)],
+                   '4': [('1', 4), ('3', 1), ('5', 1), ('6', 1)],
+                   '5': [('1', 3), ('4', 1), ('6', 2)],
+                   '6': [('4', 1), ('5', 2)]})
+
+    # heuristika
+    h = {'1' : 2,
+         '2' : 2,
+         '3' : 1,
+         '4' : 1,
+         '5' : 1,
+         '6' : 0 }
+
+    heuristic = lambda e: h[e]
+
+    put, rastojanje = best_first(graph, '1', '6', heuristic)
+    print('Put:', put)
+    print('Rastojanje:', rastojanje)
+```
+\begin{verbatim}
+Put: ['1', '4', '6']
+Rastojanje: 5
+\end{verbatim}
+
+
+\begin{figure}
+\begin{center}
+\begin{tikzpicture}[scale=0.65,shorten >=1pt, auto, node distance=1cm,
+   node_style/.style={circle,draw=black,fill=blue!20,font=\sffamily\large},
+   edge_style/.style={draw=black,thick}]
+
+    \node[node_style, fill=green!20] (v1) at (-3,2) {1};
+    \node[node_style] (v2) at (-6,0) {2};
+    \node[node_style] (v3) at (-3,-2) {3};
+    \node[node_style] (v4) at (0,0) {4};
+    \node[node_style] (v5) at (3,2) {5};
+    \node[node_style, fill=red!20] (v6) at (3,-2) {6};
+    \draw[edge_style]  (v2) edge node{1} (v1);
+    \draw[edge_style]  (v3) edge node{3} (v1);
+    \draw[edge_style]  (v4) edge[color=red, text=black, ultra thick] node{4} (v1);
+    \draw[edge_style]  (v1) edge node{3} (v5);
+    \draw[edge_style]  (v3) edge node{1} (v2);
+    \draw[edge_style]  (v4) edge node{1} (v3);
+    \draw[edge_style]  (v4) edge node{1} (v5);
+    \draw[edge_style]  (v4) edge[color=red, text=black, ultra thick] node{1} (v6);
+    \draw[edge_style]  (v5) edge node{1} (v6);
+\end{tikzpicture}
+\caption{Put pronađen algoritmom - Prvo najbolji} \label{fig:prvonaj-tikz}
+\end{center}
+\end{figure}
+
+
+## Algoritam - A*
+
+```{.python caption="A* algoritam"}
+def a_star(graph, start, stop, heuristic):
+    open_list = [start]
+    closed_list = []
+    distance = {k : float('inf') for k in graph.adj_list.keys()}
+    distance[start] = 0
+    parent = {start : start}
+
+    while len(open_list) > 0:
+
+        # iz otvorene liste uzmi cvor sa najboljom ocenom f(x)
+        # ocena f(x) je zbir udalj. od start i procene udalj. do finish
+        f = lambda x: (distance[x] + heuristic(x), heuristic(x))
+        # ako su distance[x] i heuristic(x) isti, gledamo heuristic, zato vracamo tuple
+        open_list.sort(key=lambda x: f(x))
+
+        n = open_list[0]
+
+        # ako je n ciljni cvor
+        if  n == stop:
+            # konstrisi put i vrati ga kao rezultat
+            path = []
+            while parent[n] != n:
+                path.append(n)
+                n = parent[n]
+
+            path.append(start)
+            path.reverse()
+            return path, distance[stop]
+
+        # za svaki m dir. dostupan iz n 
+        for m, weight in graph.get_neighbors(n):
+            # ako m nije ni u otv. ni u zatv listi
+            n_to_m = next(x[1] for x in graph.get_neighbors(n) if x[0] == m)
+            if m not in closed_list and m not in open_list:
+                # dodaj m u otv. listu i oznaci n kao roditelja
+                open_list.append(m)
+                parent[m] = n
+                distance[m] = distance[n] + n_to_m
+            # inace ako je novi put bolji od starog
+            elif distance[n] + n_to_m < distance[m]:
+                # postavi novi put za aktuelnu vrednost
+                distance[m] = distance[n] + n_to_m
+                parent[m] = n
+
+        # izbaci n iz otvorene liste i dodaj ga u zatvorenu
+        n = open_list.pop(0)
+        closed_list.append(n)
+
+    return None, None
+
+
+```
+
+### Algoritam - A* primer
+
+Primenićemo algoritam A* da pokušamo da nađemo najbliži put od čvora `1` do čvora `6` u sledećem grafu.
+
+```python
+graph = Graph({'1': [('2', 1), ('3', 3), ('4', 4), ('5', 3)],
+                   '2': [('1', 1), ('3', 1)],
+                   '3': [('1', 3), ('2', 1), ('4', 1)],
+                   '4': [('1', 4), ('3', 1), ('5', 1), ('6', 1)],
+                   '5': [('1', 3), ('4', 1), ('6', 2)],
+                   '6': [('4', 1), ('5', 2)]})
+
+    # heuristika
+    h = {'1' : 2,
+         '2' : 2,
+         '3' : 1,
+         '4' : 1,
+         '5' : 1,
+         '6' : 0 }
+
+    heuristic = lambda e: h[e]
+
+    put, rastojanje = a_star(graph, '1', '6', heuristic)
+    print('Put:', put)
+    print('Rastojanje:', rastojanje)
 ```
 \begin{verbatim}
 Put: ['1', '2', '3', '4', '6']
 Rastojanje: 4
 \end{verbatim}
 
+
+\begin{figure}
+\begin{center}
+\begin{tikzpicture}[scale=0.65,shorten >=1pt, auto, node distance=1cm,
+   node_style/.style={circle,draw=black,fill=blue!20,font=\sffamily\large},
+   edge_style/.style={draw=black,thick}]
+
+    \node[node_style, fill=green!20] (v1) at (-3,2) {1};
+    \node[node_style] (v2) at (-6,0) {2};
+    \node[node_style] (v3) at (-3,-2) {3};
+    \node[node_style] (v4) at (0,0) {4};
+    \node[node_style] (v5) at (3,2) {5};
+    \node[node_style, fill=red!20] (v6) at (3,-2) {6};
+    \draw[edge_style]  (v2) edge[color=red, text=black, ultra thick] node{1} (v1);
+    \draw[edge_style]  (v3) edge node{3} (v1);
+    \draw[edge_style]  (v4) edge node{4} (v1);
+    \draw[edge_style]  (v1) edge node{3} (v5);
+    \draw[edge_style]  (v3) edge[color=red, text=black, ultra thick] node{1} (v2);
+    \draw[edge_style]  (v4) edge[color=red, text=black, ultra thick] node{1} (v3);
+    \draw[edge_style]  (v4) edge node{1} (v5);
+    \draw[edge_style]  (v4) edge[color=red, text=black, ultra thick] node{1} (v6);
+    \draw[edge_style]  (v5) edge node{2} (v6);
+\end{tikzpicture}
+\caption{Put pronađen algoritmom - A*} \label{fig:prvonaj-tikz}
+\end{center}
+\end{figure}
 
 
 ## Podsetnik za algoritme
@@ -283,3 +611,7 @@ Rastojanje od početka do čvora koji ću sledeći izabrati je glavna vodilja, s
 **Pomoćne promenljive:** skup neobr. čvorova `{Q}`, mapa `{distance}`, `{visited}`, `{parent}`
 
 Svaki čvor koji uzmemo za tekući i obrišemo iz `{Q}` znači da smo do njega već našli najbliže rastojanje, tj. postao je tekući. Za svaki susedni koji je i u `Q` gledamo da li imamo bolje rešenje ako imamo, sređujemo roditelja i rastojanje. Dok nam ne nestane čvorova ili dođemo do ciljnog.
+
+### Pohlepni
+### Prvo najbolji
+### A*
