@@ -18,8 +18,9 @@ int main()
 
     {
         shared_ptr<S> sh2 = std::move(sh1);
-        std::cout << sh2->str() << '\n';
-        std::cout << sh2.use_count() << '\n';
+        shared_ptr<S> sh3 = sh2;
+        std::cout << sh3->str() << '\n';
+        std::cout << sh3.use_count() << '\n';
     }
 
     std::cout << sh1.use_count() << '\n';
