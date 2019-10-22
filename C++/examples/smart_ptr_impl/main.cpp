@@ -15,6 +15,8 @@ struct S {
 int main()
 {
     auto sh0 = shared_ptr<S>(nullptr);
+    std::cout << sh0.use_count() << '\n';
+
     auto sh1 = make_shared<S>(S{"Hello world"});
 
     {
@@ -27,7 +29,7 @@ int main()
 
     shared_ptr<S> tmp(nullptr);
     sh1.swap(tmp);
-    std::cout << sh0->str() << std::endl;
+    std::cout << sh0->str() << '\n';
 
     std::cout << sh1.use_count() << '\n';
 

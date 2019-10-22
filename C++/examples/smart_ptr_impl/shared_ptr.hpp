@@ -14,7 +14,6 @@
  * - implementiran je copy konstruktor
  * - move konstruktor se oslanja na swap
  * - operator= se oslanja na copy konstruktor i na swap
- * - move operator= se oslanja na swap
  * - move operator= se oslanja na swap */
 
 namespace kotur {
