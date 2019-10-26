@@ -3,6 +3,12 @@ factorial :: Integer -> Integer
 factorial n = if n <= 1 then 1 
               else n * factorial (n-1)
 
+-- Factorial0 implementation
+factorial0 :: Integer -> Integer
+factorial0 n 
+  | n < 2 = 1
+  | otherwise = n * factorial0 (n-1)
+
 -- Factorial implementation 1
 factorial' :: Integer -> Integer
 factorial' 0 = 1

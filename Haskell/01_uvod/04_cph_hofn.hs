@@ -22,7 +22,7 @@ takeWhile (>=3) [5,4,3,2,1] -- Takes while >=3: [5,4,3]
 (4 *) $ 3 + 2 -- Calculates 3+2, then * 4: result = 20
 (4 *) 3 + 2   -- Calculates 4*3, then + 2: result = 14 
 
--- Composition:
+-- Composition/application:
 h = (\e -> -e) . (\e -> e^2) -- f.g = f(g(x))
 {--     f      .      g      =        f(g(x)) --}
 h' x = (\e -> -e) $ (\e -> e^2) $ x --f(g(x))
