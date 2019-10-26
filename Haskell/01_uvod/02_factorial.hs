@@ -14,6 +14,14 @@ factorial' :: Integer -> Integer
 factorial' 0 = 1
 factorial' n = n * factorial' (n-1)
 
+-- tail recursive factorial (easy for compiler optimization)
+-- compiler makes reusing previous parameters memory 
+-- (no high memory usage on calling with huge number)
+tailFactorial n =
+    let factInner 0 acc =  acc
+        factInner n acc = factInner (n-1) (n*acc)
+    in factInner n 1
+
 -- Factorial implementation 2
 factorial'' :: Integer -> Integer
 factorial'' n = foldl (*) 1 [1..n] 
@@ -21,8 +29,3 @@ factorial'' n = foldl (*) 1 [1..n]
 -- Factorial implementation 3
 factorial''' :: Integer -> Integer
 factorial''' n = product[1..n]
-
--- Elements of Haronic series
-harm_series :: (Eq n, Fractional n) => n -> n
-harm_series 1 = 1.0
-harm_series n = harm_series(n-1) + 1/n
