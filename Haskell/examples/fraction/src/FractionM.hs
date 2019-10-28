@@ -1,20 +1,22 @@
 module FractionM
-    ( Fraction ((:-:))
+    ( Fraction
+    --, Fraction ((:-:))
     , toFraction
-    , (!)
+    , (!-!)
     , fromPair, toPair
     , num, den
     , maybeShow
     ) where
 
 data Fraction = Int :-: Int
+              deriving (Eq)
 
 toFraction :: Int -> Int -> Maybe Fraction
 toFraction n d | d == 0 = Nothing
                | otherwise = Just $ simplify (n :-: d)
 
-(!) :: Int -> Int -> Maybe Fraction
-(!) = toFraction
+(!-!) :: Int -> Int -> Maybe Fraction
+(!-!) = toFraction
 
 fromPair :: (Int, Int) -> Maybe Fraction
 fromPair (x, y) = toFraction x y 
