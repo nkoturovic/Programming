@@ -1,9 +1,9 @@
 module Main where
 
-import Fraction
+import FractionE
 
 main :: IO ()
 main = do
     putStrLn "Hello world"
-    putStrLn $ maybeShow (8 !-! 10)
-    putStrLn $ maybeShow (1 !-! 0)
+    print (8!10)
+    print (1!0)
