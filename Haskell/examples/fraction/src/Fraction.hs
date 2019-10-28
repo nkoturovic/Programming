@@ -1,4 +1,4 @@
-module FractionE
+module Fraction
     ( Fraction
     --, Fraction ((:-:))
     , toFraction
@@ -10,8 +10,8 @@ module FractionE
 import Control.Exception
 import Data.Typeable
 
-data Fraction = Int :-: Int
-              deriving (Eq)
+data Fraction = Integer :-: Integer
+              deriving (Eq, Ord)
 
 ------------ Ecception ------------
 data FractionException 
@@ -20,25 +20,26 @@ data FractionException
 
 instance Exception FractionException
 -----------------------------------
-toFraction :: Int -> Int -> Fraction
+toFraction :: Integer -> Integer -> Fraction
 toFraction n d =  
     case d of
         0 -> throw FractionZeroDenominator
         _ -> simplify (n :-: d)
 
-(!-!) :: Int -> Int -> Fraction
+infix 7 !-!
+(!-!) :: Integer -> Integer -> Fraction
 (!-!) = toFraction
 
-fromPair :: (Int, Int) -> Fraction
+fromPair :: (Integer, Integer) -> Fraction
 fromPair (x, y) = toFraction x y 
 
-toPair :: Fraction -> (Int, Int)
+toPair :: Fraction -> (Integer, Integer)
 toPair (n :-: d) = (n, d)
 
-num :: Fraction -> Int
+num :: Fraction -> Integer
 num (n :-: _) = n
 
-den :: Fraction -> Int
+den :: Fraction -> Integer
 den (_ :-: d) = d
 
 simplify :: Fraction -> Fraction
@@ -50,3 +51,11 @@ showFraction (n :-: d) = show n ++ "/" ++ show d
 
 instance Show Fraction where
     show = showFraction
+
+instance Num Fraction where
+    (n1 :-: d1) + (n2 :-: d2) = ((n1 * d2) + (n2 * d1)) !-! (d1 * d2)
+    (n1 :-: d1) - (n2 :-: d2) = ((n1 * d2) - (n2 * d1)) !-! (d1 * d2)
+    (n1 :-: d1) * (n2 :-: d2) = (n1 * n2) !-! (d1 * d2)
+    fromInteger i = i !-! 1
+    abs (n :-: d) = abs n !-! abs d
+    signum (n :-: d) = (signum n * signum d) !-! 1

@@ -1,6 +1,6 @@
 module Main where
 
-import FractionE
+import Fraction
 
 dbl :: Fraction -> Fraction
 dbl f = (2 * (num f)) !-! den f
@@ -14,4 +14,6 @@ main = do
     print (dbl fr)
     print (8!-!10 == 4!-!5)
     print (8!-!10)
+    print ( (8!-!10) * 2)
+    print ( 1 - (8!-!10))
     print (1!-!0)
