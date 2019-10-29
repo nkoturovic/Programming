@@ -19,7 +19,7 @@ public:
     T* get() const noexcept;
     T& operator*();
 
-    T& operator=(unique_ptr<T>) = delete;
+    T& operator=(const unique_ptr<T>&) = delete;
     T& operator=(unique_ptr<T> &&);
     T* operator->();
 
