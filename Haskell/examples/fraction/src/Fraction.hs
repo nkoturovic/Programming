@@ -1,6 +1,6 @@
 module Fraction
-    ( Fraction
-    --, Fraction ((:-:))
+    ( Fract
+    , Fraction
     , toFraction
     , (!-!)
     , fromPair, toPair
@@ -10,8 +10,12 @@ module Fraction
 import Control.Exception
 import Data.Typeable
 
-data Fraction = Integer :-: Integer
-              deriving (Eq, Ord)
+infixl 7 !-! 
+
+data Fract t =  t :-: t
+              deriving (Eq)
+
+type Fraction = Fract Integer
 
 ------------ Ecception ------------
 data FractionException 
@@ -20,42 +24,43 @@ data FractionException
 
 instance Exception FractionException
 -----------------------------------
-toFraction :: Integer -> Integer -> Fraction
+toFraction :: (Integral t, Num t, Show t) => t -> t -> Fract t
 toFraction n d =  
     case d of
         0 -> throw FractionZeroDenominator
         _ -> simplify (n :-: d)
 
-infix 7 !-!
-(!-!) :: Integer -> Integer -> Fraction
+(!-!) :: (Integral t, Num t, Show t) => t -> t -> Fract t
 (!-!) = toFraction
 
-fromPair :: (Integer, Integer) -> Fraction
+fromPair :: (Integral t, Num t, Show t) => (t, t) -> Fract t
 fromPair (x, y) = toFraction x y 
 
-toPair :: Fraction -> (Integer, Integer)
+toPair :: Fract t -> (t, t)
 toPair (n :-: d) = (n, d)
 
-num :: Fraction -> Integer
+num :: Fract t -> t
 num (n :-: _) = n
 
-den :: Fraction -> Integer
+den :: Fract t -> t
 den (_ :-: d) = d
 
-simplify :: Fraction -> Fraction
+
+simplify :: (Integral t) => Fract t -> Fract t
 simplify (n :-: d) = 
     (n `div` c) :-: (d `div` c) where c = gcd n d
 
-showFraction :: Fraction -> String
-showFraction (n :-: d) = show n ++ "/" ++ show d
+instance (Show t) => Show (Fract t) where
+    show (n :-: d) = show n ++ "/" ++ show d
 
-instance Show Fraction where
-    show = showFraction
-
-instance Num Fraction where
+instance (Show t, Integral t, Num t) => Num (Fract t) where
     (n1 :-: d1) + (n2 :-: d2) = ((n1 * d2) + (n2 * d1)) !-! (d1 * d2)
     (n1 :-: d1) - (n2 :-: d2) = ((n1 * d2) - (n2 * d1)) !-! (d1 * d2)
     (n1 :-: d1) * (n2 :-: d2) = (n1 * n2) !-! (d1 * d2)
-    fromInteger i = i !-! 1
+    fromInteger i =  fromIntegral i :-: 1
     abs (n :-: d) = abs n !-! abs d
     signum (n :-: d) = (signum n * signum d) !-! 1
+
+instance (Integral t) => Ord (Fract t)  where
+    (n1 :-: d1) <= (n2 :-: d2)  =  n1 * d2 <= n2 *d1 
+    (n1 :-: d1) < (n2 :-: d2)  =  n1 * d2 < n2 *d1 
