@@ -30,7 +30,7 @@ public:
     shared_ptr(shared_ptr<T> &&);
     ~shared_ptr();
 
-    T* get();
+    T* get() const noexcept;
     long use_count() const;
     T& operator*();
 
@@ -84,11 +84,6 @@ shared_ptr<T>::~shared_ptr() {
 }
 
 template <typename T>
-T* shared_ptr<T>::get() {
-    return m_raw_pointer;
-}
-
-template <typename T>
 T& shared_ptr<T>::operator*() {
     return * this->get();
 }
@@ -109,6 +104,11 @@ T& shared_ptr<T>::operator=(shared_ptr<T> && rhs) {
     this->swap(rhs);
     return *(*this);
 } 
+
+template <typename T>
+T* shared_ptr<T>::get() const noexcept {
+    return m_raw_pointer;
+}
 
 template <typename T>
 long shared_ptr<T>::use_count() const {
