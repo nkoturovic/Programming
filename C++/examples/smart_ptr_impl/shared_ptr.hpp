@@ -133,7 +133,7 @@ void shared_ptr<T>::swap(shared_ptr<T> &rhs) noexcept {
 
 template <typename T, typename...Args>
 shared_ptr<T> make_shared(Args&&... args) {
-    return shared_ptr<T>(new T(args...));
+    return shared_ptr<T>(new T(std::forward<Args>(args)...));
 }
 
 } // ns kotur

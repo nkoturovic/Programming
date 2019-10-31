@@ -33,7 +33,6 @@ TEST_CASE( "Raw_ptr and use count test", "[shared_ptr]" ) {
         REQUIRE( sh2.use_count() == 2 );
     }
 
-
     SECTION("Swap test", "[shared_ptr]" )  { 
             shared_ptr<std::string> tmp(nullptr);
             auto sh1 = make_shared<std::string>("Hello world");
