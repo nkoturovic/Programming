@@ -15,35 +15,32 @@
  * as noted above. */
 
 #include <string_view>
-#include "pimpl.hpp"
+#include "utility/pimpl.hpp"
+#include "interface/transform.hpp"
 
 namespace rs {
 
-class Image {
+class Image : public interface::Transformable {
     /* impl class name must be ImageImpl */
     friend class ImageImpl;
 public:
     Image(std::string_view image_path);
-
     void show() const;
-    void rotate(double degrees);
-    void adjustBrightness(double amount);
+
+    virtual void applyTransfromation(const interface::Transformation &t) override;
 private:
     struct ImageImplBase;
-    pimpl<Image::ImageImplBase> m_pimpl;
+    utility::pimpl<Image::ImageImplBase> m_pimpl;
 };
 
-struct Image::ImageImplBase {
+struct Image::ImageImplBase : public interface::Transformable {
     ImageImplBase(std::string_view) { };
     virtual ~ImageImplBase() = default;
-
     virtual void show() const = 0;
-    virtual void rotate(double degrees) = 0;
-    virtual void adjustBrightness(double amount) = 0;
 
+    virtual void applyTransfromation(const interface::Transformation &t) = 0;
     virtual std::unique_ptr<ImageImplBase> clone() const = 0;
 };
-
 
 } // namespace rs
 

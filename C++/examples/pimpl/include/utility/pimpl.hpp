@@ -4,7 +4,7 @@
 #include <experimental/propagate_const>
 #include <memory>
 
-namespace rs {
+namespace rs::utility {
 
 template<typename T>
 class pimpl {
@@ -96,7 +96,7 @@ void swap(pimpl<T> &lhs, pimpl<T> &rhs) noexcept {
 
 template <typename T>
 void pimpl<T>::swap(pimpl<T> &rhs) noexcept {
-    using rs::swap;
+    using rs::utility::swap;
     swap(*this, rhs);
 }
 
