@@ -1,11 +1,15 @@
-#include <iostream>
 #include "image.hpp"
-#include "transformations.hpp"
+#include "transform.hpp"
 
 int main()
 {
     rs::Image img("/home/kotur/Pictures/lee.jpg");
-    img.applyTransfromation(rs::transformations::Rotation(90));
-    rs::Image img2 = std::move(img);
-    img2.show();
+    img.show();
+
+    auto comp = rs::Rotate(10) * rs::Rotate(12);
+    img << rs::Rotate(30) * comp;
+
+    img.show();
+
+    return 0;
 }

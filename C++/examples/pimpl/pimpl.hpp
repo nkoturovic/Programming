@@ -46,7 +46,7 @@ pimpl<T>::pimpl( Args&& ...args )
     : m_uptr_to_impl(std::forward<Args>(args)...) { }
 
 template<typename T>
-pimpl<T>::pimpl(const pimpl &other) : m_uptr_to_impl(other->clone()) {}
+pimpl<T>::pimpl(const pimpl &other) : m_uptr_to_impl{ new T(*other) } {}
 
 template<typename T>
 pimpl<T>::pimpl(pimpl &&other) {
