@@ -18,7 +18,7 @@ public:
     pimpl(const pimpl &other);
     pimpl(pimpl &&other);
 
-    pimpl& operator=(const pimpl &other);
+    pimpl& operator=(pimpl other);
     pimpl& operator=(pimpl &&other);
 
     virtual ~pimpl();
@@ -38,7 +38,7 @@ public:
  };
 
 template<typename T>
-pimpl<T>::pimpl() : m_uptr_to_impl{nullptr} { }
+pimpl<T>::pimpl() : m_uptr_to_impl{new T()} { }
  
 template<typename T>
 template<typename ...Args>
@@ -54,9 +54,8 @@ pimpl<T>::pimpl(pimpl &&other) {
 }
 
 template<typename T>
-pimpl<T>& pimpl<T>::operator=(const pimpl<T> &other) { 
-    pimpl<T> tmp(other);
-    this->swap(tmp);
+pimpl<T>& pimpl<T>::operator=(pimpl<T> other) { 
+    this->swap(other);
     return *this;
 }
 

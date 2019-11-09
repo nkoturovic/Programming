@@ -7,7 +7,7 @@ OPENCV_LIBS := $(shell pkg-config opencv4 --libs)
 CXXFLAGS = -std=c++17 -Wall -Wextra -Wpedantic $(OPENCV_CFLAGS)
 LDLIBS = $(OPENCV_LIBS)
 
-$(TARGET): main.o image.o image_impl.o transform.o
+$(TARGET): main.o image.o image_impl.o transform.o display.o
 	$(CXX) -o $@ $(CXXFLAGS) $(LDLIBS) $^
 
 main.o: main.cpp
@@ -22,7 +22,8 @@ image_impl.o: image_impl.cpp
 transform.o: transform.cpp
 	$(CXX) -c -o $@ $(CXXFLAGS) $<
 
-
+display.o: display.cpp
+	$(CXX) -c -o $@ $(CXXFLAGS) $<
 
 .PHONY:
 	clean

@@ -9,7 +9,6 @@ namespace rs {
 struct Image::ImageImpl {
     ImageImpl(std::string_view image_path);
     cv::Mat m_image;
-    void show() const;
 };
 
 } // namespace rs

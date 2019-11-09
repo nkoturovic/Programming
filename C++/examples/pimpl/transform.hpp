@@ -9,8 +9,14 @@ namespace rs {
 
 class Transform {
 public:
-    friend Image& operator<<(Image &img, const Transform& tr) 
-    { return tr.applyToImpl(img); }
+    friend Image& operator<<=(Image &img, const Transform& tr) { 
+        return tr.applyToImpl(img); 
+    }
+
+    friend Image operator<<(const Image &img, const Transform& tr) { 
+        Image copy(img);
+        return copy <<= tr;
+    }
 
 private:
     virtual Image& applyToImpl(Image &) const = 0;
@@ -36,7 +42,8 @@ private:
     double m_degrees;
 };
 
-Image& operator<<(Image &img, const Transform& tr);
+Image& operator<<=(Image &img, const Transform& tr);
+Image operator<<(const Image &img, const Transform& tr);
 Composition operator*(const Transform& tr1, const Transform& tr2);
 
 } // namespace rs

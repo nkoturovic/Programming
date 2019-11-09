@@ -24,7 +24,7 @@ Image& Rotate::applyToImpl(Image &img) const {
 }
 
 Composition::Composition(const Transform& tr1, const Transform& tr2) : 
-    m_composition( [&tr1, &tr2](Image &img) -> Image& { return img << tr2 << tr1; } ) {}
+    m_composition( [&tr1, &tr2](Image &img) -> Image& { return (img <<= tr2) <<= tr1; } ) {}
 
 Image& Composition::applyToImpl(Image &img) const {
     return m_composition(img);

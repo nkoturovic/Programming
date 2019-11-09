@@ -10,8 +10,4 @@ Image::ImageImpl& Image::pimpl() {
     return *m_pimpl;
 }
 
-void Image::show() const {
-    m_pimpl->show();
-}
-
 } // namespace rs

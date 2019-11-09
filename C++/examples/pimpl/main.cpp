@@ -1,15 +1,20 @@
 #include "image.hpp"
 #include "transform.hpp"
+#include "display.hpp"
 
 int main()
 {
     rs::Image img("/home/kotur/Pictures/lee.jpg");
-    img.show();
+    img <<= rs::Rotate(30) * rs::Rotate(60);
+    rs::Image img2 = img << rs::Rotate(30) * rs::Rotate(13);
 
-    auto comp = rs::Rotate(10) * rs::Rotate(12);
-    img << rs::Rotate(30) * comp;
+    rs::Display disp1;
+    disp1.show(img);
 
-    img.show();
+    rs::Display disp2;
+    disp2.show(img2);
+
+    rs::Display::waitKey();
 
     return 0;
 }
