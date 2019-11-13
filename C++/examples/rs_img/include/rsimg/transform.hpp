@@ -36,11 +36,29 @@ private:
 
 class Rotate : public Transform {
 public:
-    Rotate(double degrees);
+    enum class Direction { LEFT, RIGHT };
+    Rotate(Direction);
+private:
+    Direction m_direction;
+    virtual Image& applyToImpl(Image &) const override;
+};
+
+class Flip : public Transform {
+public:
+    enum class Axis { X=0, Y=1 };
+    Flip(Axis);
+private:
+    Axis m_axis;
+    virtual Image& applyToImpl(Image &) const override;
+};
+
+class BlackNWhite : public Transform {
+public:
+    BlackNWhite();
 private:
     virtual Image& applyToImpl(Image &) const override;
-    double m_degrees;
 };
+
 
 Image& operator<<=(Image &img, const Transform& tr);
 Image operator<<(const Image &img, const Transform& tr);

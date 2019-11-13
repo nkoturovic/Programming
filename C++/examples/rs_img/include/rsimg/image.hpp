@@ -1,23 +1,24 @@
 #ifndef RS_IMAGE_H
 #define RS_IMAGE_H
 
-#include <string_view>
-// #include "pimpl.hpp"
-#include "spimpl.h"
+#include <string>
+#include "3rd_party/spimpl.h"
 
 namespace rs {
 
 class Image {
 private:
     struct ImageImpl;
-    //rs::utility::pimpl<ImageImpl> m_pimpl; 
+    friend ImageImpl& get_impl(Image &);
+
     spimpl::impl_ptr<ImageImpl> m_pimpl; 
+    ImageImpl& impl();
 
 public:
-    Image(std::string_view image_path);
+    Image(std::string image_path);
     ~Image();
-    
-    ImageImpl& pimpl();
+
+    void write(std::string image_path);
 };
 
 }
