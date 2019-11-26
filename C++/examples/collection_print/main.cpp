@@ -12,8 +12,7 @@ void print(
         printElFunc = [](std::ostream& out,
                          typename std::iterator_traits<It>::value_type val)
         -> std::ostream& { return out << val; }) {
-    It it;
-    for (it = begin; it != end;) {
+    for (auto it = begin; it != end;) {
         printElFunc(out, *it);
         if (++it != end) out << delimiter;
     }
