@@ -17,7 +17,7 @@ data Fract t =  t :-: t
 
 type Fraction = Fract Integer
 
------------- Ecception ------------
+------------ Exception ------------
 data FractionException 
   = FractionZeroDenominator
   deriving (Show,Typeable)
@@ -64,3 +64,6 @@ instance (Integral t, Num t) => Num (Fract t) where
 instance (Integral t) => Ord (Fract t)  where
     (n1 :-: d1) <= (n2 :-: d2)  =  n1 * d2 <= n2 *d1 
     (n1 :-: d1) < (n2 :-: d2)  =  n1 * d2 < n2 *d1 
+
+instance Functor Fract where
+    fmap func (n :-: d) = func n :-: func d
