@@ -1,7 +1,9 @@
 CMakeFiles
 CMakeCache.txt
+CMakeLists.txt.user
 *.cmake
-build
-Build
+*build*
+*Build*
 Makefile
 compile_commands.json
+*_autogen
