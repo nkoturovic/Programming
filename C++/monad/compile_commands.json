@@ -1,0 +1,19 @@
+[
+    {
+        "arguments": [
+            "g++",
+            "-c",
+            "-g",
+            "-std=c++2a",
+            "-Wall",
+            "-Wextra",
+            "-Wpedantic",
+            "-fconcepts",
+            "-o",
+            "main.o",
+            "main.cpp"
+        ],
+        "directory": "/home/kotur/Desktop/prog/github/Programming/C++/monad",
+        "file": "main.cpp"
+    }
+]
