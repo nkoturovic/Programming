@@ -4,8 +4,8 @@
 #include <functional>
 #include <cmath>
 
-template <typename... Ts>
-struct print_types;
+//template <typename... Ts>
+//struct print_types;
 
 template<class... Ts> struct overloaded : Ts... { using Ts::operator()...; };
 template<class... Ts> overloaded(Ts...) -> overloaded<Ts...>;
@@ -13,14 +13,14 @@ template<class... Ts> overloaded(Ts...) -> overloaded<Ts...>;
 template <typename Left, typename Right>
 using Either = std::variant<Left, Right>;
 
-template <typename Ftype, typename Left, typename OldRight>
-constexpr auto mapM(Ftype &&f, Either<Left, OldRight> &&val) -> Either<Left, std::invoke_result_t<Ftype,OldRight>> {
-      using Right = std::invoke_result_t<Ftype,OldRight>;
-      return std::visit(overloaded {
-            [](Left && arg) -> Either<Left,Right>        { return std::forward<Left>(arg); },
-            [&f](OldRight && arg) -> Either<Left, Right> { return std::invoke(std::forward<Ftype>(f), std::forward<OldRight>(arg)); }
-      }, std::forward<Either<Left,OldRight>>(val));
-}
+// template <typename Ftype, typename Left, typename OldRight>
+// constexpr auto mapM(Ftype &&f, Either<Left, OldRight> &&val) -> Either<Left, std::invoke_result_t<Ftype,OldRight>> {
+//       using Right = std::invoke_result_t<Ftype,OldRight>;
+//       return std::visit(overloaded {
+//             [](Left && arg) -> Either<Left,Right>        { return std::forward<Left>(arg); },
+//             [&f](OldRight && arg) -> Either<Left, Right> { return std::invoke(std::forward<Ftype>(f), std::forward<OldRight>(arg)); }
+//       }, std::forward<Either<Left,OldRight>>(val));
+// }
 
 /* Ovde problem dedukcija povratne vrednosti ???????? */
 template <typename Ftype, typename Left, typename OldRight>
@@ -31,16 +31,6 @@ constexpr auto bindM(Either<Left,OldRight> &&val, Ftype &&f) -> std::invoke_resu
             [](Left && arg) -> ResultType        { return { std::forward<Left>(arg) }; },
             [&f](OldRight && arg) -> ResultType  { return std::invoke(std::forward<Ftype>(f), std::forward<OldRight>(arg)); }
       }, std::forward<Either<Left,OldRight>>(val));
-}
-
-template <class G, class F>
-constexpr auto compose(G &&g, F &&f) {
-    return [g,f](auto ... args) { return g(f(args...)); };
-}
-
-template <class G, class F, class ... Hs>
-constexpr auto compose(G &&g, F &&f, Hs&& ... hs) {
-    return compose(std::forward<G>(g), compose(std::forward<F>(f), std::forward<Hs>(hs)...));
 }
 
 template <class G, class F>
