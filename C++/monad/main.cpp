@@ -23,7 +23,7 @@ constexpr auto mapM(Ftype &&f, Either<Left, OldRight> &&val) -> Either<Left, std
 }
 
 /* Ovde problem dedukcija povratne vrednosti ???????? */
-template <typename Left, typename OldRight, typename Ftype>
+template <typename Ftype, typename Left, typename OldRight>
 constexpr auto bindM(Either<Left,OldRight> &&val, Ftype &&f) -> std::invoke_result_t<Ftype,OldRight> { 
       using ResultType = std::invoke_result_t<Ftype,OldRight>;
       //print_types<ResultType>{};
@@ -34,17 +34,17 @@ constexpr auto bindM(Either<Left,OldRight> &&val, Ftype &&f) -> std::invoke_resu
 }
 
 template <class G, class F>
-constexpr auto compose (G &&g, F &&f) {
+constexpr auto compose(G &&g, F &&f) {
     return [g,f](auto ... args) { return g(f(args...)); };
 }
 
 template <class G, class F, class ... Hs>
-constexpr auto compose (G &&g, F &&f, Hs&& ... hs) {
+constexpr auto compose(G &&g, F &&f, Hs&& ... hs) {
     return compose(std::forward<G>(g), compose(std::forward<F>(f), std::forward<Hs>(hs)...));
 }
 
 template <class G, class F>
-constexpr auto composeM (G &&g, F &&f) {
+constexpr auto composeM(G &&g, F &&f) {
     return [g,f]<typename ...Args>(Args ... args) {
         auto fret = f(args...);
         // using ret_type = Either<std::decay_t<decltype(std::get<0>(gret))>, std::decay_t<decltype(std::get<1>(gret))>>;
@@ -67,10 +67,11 @@ constexpr auto composeM(G &&g, F &&f, Hs&& ...hs) {
 }
 
 
-template <class F, class Left, class Right>
-constexpr auto operator | (Either<Left, Right> &&val, F &&f) {
-    return bindM(std::forward<Either<Left,Right>>(val), std::forward<F>(f));
-}
+// Omogucava sintaksu bez transform (da li to zelimo?)
+// template <class F, class Left, class Right>
+// constexpr auto operator | (Either<Left, Right> &&val, F &&f) {
+//     return bindM(std::forward<Either<Left,Right>>(val), std::forward<F>(f));
+// }
 
 template <typename Trafo>
 struct trafo_helper {
@@ -88,12 +89,12 @@ constexpr auto transform(Trafo &&trafo) {
 // Nije neophodno (treba ili ovo ili operator () )
 template <class F, class Left, class Right>
 constexpr auto operator | (Either<Left, Right> &&val, trafo_helper<F> &&t) {
-    return bindM(std::forward<Either<Left,Right>>(val), t.trafo);
+    return bindM(std::forward<Either<Left,Right>>(val), std::move(t.trafo));
 }
 
 template <class F, class G>
 constexpr auto operator | (trafo_helper<F> &&f, trafo_helper<G> &&g) {
-    return composeM(std::move(g.trafo), std::move(f.trafo));
+    return transform(composeM(std::move(g.trafo), std::move(f.trafo)));
 }
 
 // Standard without trafo
@@ -131,9 +132,9 @@ int main()
 
     // Nije lenjo
     auto result1 = Either<std::string, int> { -333 }
-                 | [](auto x) -> Either<std::string,double> { return x + 20.0; }
-                 | [](auto x) { return safe_div(256,x); }
-                 | safe_sqrt
+                 | transform([](auto x) -> Either<std::string,double> { return x + 20.0; })
+                 | transform([](auto x) { return safe_div(256,x); })
+                 | transform(safe_sqrt)
                  ;
 
     auto c1 = composeM([](auto x) -> Either<std::string, double> { return x + 3.3; },
@@ -145,7 +146,7 @@ int main()
 
     Either<std::string, double> num { 1024.0 };
     //auto r = bindM(std::move(num), c1);
-    auto r = std::move(num) | c2;
+    auto r = std::move(num) | std::move(c2);
 
     std::visit([](const auto &x) { std::cout << x << std::endl; }, result);
     std::visit([](const auto &x) { std::cout << x << std::endl; }, r);
