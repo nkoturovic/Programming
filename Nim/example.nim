@@ -1,4 +1,5 @@
 import strformat
+import macros
 
 type Person = object
     name: string
@@ -21,3 +22,7 @@ for i in countdown(10, 1, 2):
 let p = Person(name:"John", age:25)
 echo(p)
 echo(p.info)
+
+static:
+  for sym in getType(Person)[2]:
+    echo sym.symbol
