@@ -56,17 +56,17 @@ fn dlt(tacke : &Vec<(Vec3, Vec3)>) -> M3x3 {
 
 
 fn main() {
-	let a = Vec3::new(-3.0, -1.0, 1.0);
-	let b = Vec3::new(3.0, -1.0, 1.0);
-	let c = Vec3::new(1.0, 1.0, 1.0);
-	let d = Vec3::new(-1.0, 1.0, 1.0);
+    let a = Vec3::new(-3.0, -1.0, 1.0);
+    let b = Vec3::new(3.0, -1.0, 1.0);
+    let c = Vec3::new(1.0, 1.0, 1.0);
+    let d = Vec3::new(-1.0, 1.0, 1.0);
     let e = Vec3::new(1.0, 2.0, 3.0);
     let f = Vec3::new(-8.0, -2.0, 1.0);
 
-	let ap = Vec3::new(-2.0, -1.0, 1.0);
-	let bp = Vec3::new(2.0, -1.0, 1.0);
-	let cp = Vec3::new(2.0, 1.0, 1.0);
-	let dp = Vec3::new(-2.0, 1.0, 1.0);
+    let ap = Vec3::new(-2.0, -1.0, 1.0);
+    let bp = Vec3::new(2.0, -1.0, 1.0);
+    let cp = Vec3::new(2.0, 1.0, 1.0);
+    let dp = Vec3::new(-2.0, 1.0, 1.0);
     let ep = Vec3::new(2.0, 1.0 , 4.0);
     let fp = Vec3::new(-16.0, -5.0, 4.0);
 
