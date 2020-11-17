@@ -1,9 +1,8 @@
 use nalgebra as na;
-use na::{Vector3, DMatrix ,MatrixMN, Matrix3, SVD, U2, U9};
 
-type Vec3 = Vector3<f64>;
-type M2x9 = MatrixMN<f64,U2,U9>;
-type M3x3 = Matrix3<f64>;
+type Vec3 = na::Vector3<f64>;
+type M2x9 = na::MatrixMN<f64,na::U2,na::U9>;
+type M3x3 = na::Matrix3<f64>;
 
 fn napravi_matricu_sistema(x : &Vec3, xp : &Vec3) -> M2x9 {
     M2x9::from_row_slice(
@@ -44,20 +43,19 @@ fn dlt(tacke : &Vec<(Vec3, Vec3)>) -> M3x3 {
     }
 
     let r : Vec<_> = ms.iter().map(|x| x.as_slice()).collect();
-    let m = DMatrix::from_row_slice(
+    let m = na::DMatrix::from_row_slice(
         tacke.len() * 2,
         9,
         &r.as_slice().concat()
     );
 
-    let svd = SVD::new(m, false, true);
+    let svd = na::SVD::new(m, false, true);
     let vt = svd.v_t.expect("SVD algoritam nije moguce primeniti na matricu m");
     M3x3::from_row_slice(vt.column(vt.ncols() - 1).as_slice())
 }
 
 
 fn main() {
-
 	let a = Vec3::new(-3.0, -1.0, 1.0);
 	let b = Vec3::new(3.0, -1.0, 1.0);
 	let c = Vec3::new(1.0, 1.0, 1.0);
