@@ -1,0 +1,12 @@
+[package]
+name = "ppgr-domaci3"
+version = "0.1.0"
+authors = ["Nebojša Koturović <necer95@gmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+nalgebra = "0.23.0"
+nalgebra-lapack = "0.14.0"
+kiss3d = "0.28.0"
