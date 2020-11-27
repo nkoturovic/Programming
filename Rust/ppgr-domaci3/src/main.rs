@@ -1,11 +1,10 @@
 use nalgebra as na;
-use na::{Matrix3, Vector3, Quaternion};
 
 fn main() {
-    prikazi_primer(-f64::atan(1.0/4.0), -f64::asin(8.0/9.0), f64::atan(4.0));
+    prikazi_primer(-f32::atan(1.0/4.0), -f32::asin(8.0/9.0), f32::atan(4.0));
 }
 
-fn prikazi_primer(fi : f64, teta : f64, psi : f64) {
+fn prikazi_primer(fi : f32, teta : f32, psi : f32) {
     println!("--------------------------------------------------------------");
     println!("Ojlerovi uglovi: (fi:{:.5}, teta:{:.5}, psi:{:.5})", fi, teta, psi);
     println!("--------------------------------------------------------------");
@@ -37,20 +36,20 @@ fn prikazi_primer(fi : f64, teta : f64, psi : f64) {
     println!("--------------------------------------------------------------");
 }
 
-fn euler2a(fi : f64, teta : f64, psi : f64) -> Matrix3<f64> {
-    let rx = Matrix3::<f64>::new(
+fn euler2a(fi : f32, teta : f32, psi : f32) -> na::Matrix3<f32> {
+    let rx = na::Matrix3::<f32>::new(
         1.0, 0.0, 0.0,
         0.0, fi.cos(), -fi.sin(),
         0.0, fi.sin(), fi.cos()
     );
 
-    let ry = Matrix3::<f64>::new(
+    let ry = na::Matrix3::<f32>::new(
         teta.cos(), 0.0, teta.sin(),
         0.0, 1.0, 0.0,
         -teta.sin(), 0.0, teta.cos()
     );
 
-    let rz = Matrix3::<f64>::new(
+    let rz = na::Matrix3::<f32>::new(
         psi.cos(), -psi.sin(), 0.0,
         psi.sin(), psi.cos(), 0.0,
         0.0, 0.0, 1.0);
@@ -58,9 +57,9 @@ fn euler2a(fi : f64, teta : f64, psi : f64) -> Matrix3<f64> {
     rz * ry * rx
 }
 
-fn axis_angle(a : &Matrix3<f64>) -> (Vector3<f64>, f64) {
+fn axis_angle(a : &na::Matrix3<f32>) -> (na::Vector3<f32>, f32) {
     // P = A - E
-    let pmat = a - Matrix3::<f64>::from_diagonal_element(1.0);
+    let pmat = a - na::Matrix3::<f32>::from_diagonal_element(1.0);
 
     let v = pmat.row(0).transpose().normalize();
     let u = pmat.row(1).transpose().normalize();
@@ -76,9 +75,9 @@ fn axis_angle(a : &Matrix3<f64>) -> (Vector3<f64>, f64) {
     }
 }
 
-fn rodrigez(p : &Vector3<f64>, fi : f64) -> Matrix3<f64> {
+fn rodrigez(p : &na::Vector3<f32>, fi : f32) -> na::Matrix3<f32> {
     let pn = p.normalize();
-    let px = Matrix3::<f64>::new(
+    let px = na::Matrix3::<f32>::new(
         0.0, -pn.z, pn.y,
         pn.z, 0.0, -pn.x,
         -pn.y, pn.x, 0.0
@@ -86,11 +85,11 @@ fn rodrigez(p : &Vector3<f64>, fi : f64) -> Matrix3<f64> {
 
     // formula rodrigeza
     p*p.transpose() + fi.cos() *
-        (Matrix3::<f64>::from_diagonal_element(1.0) -
+        (na::Matrix3::<f32>::from_diagonal_element(1.0) -
             p*p.transpose()) + fi.sin() * px
 }
 
-fn a2euler(a : &Matrix3<f64>) -> (f64, f64, f64) {
+fn a2euler(a : &na::Matrix3<f32>) -> (f32, f32, f32) {
     if a[(2,0)] < 1.0 {
         if a[(2,0)] > -1.0 {
             return (
@@ -101,7 +100,7 @@ fn a2euler(a : &Matrix3<f64>) -> (f64, f64, f64) {
         } else {
             return (
                 0.0,
-                std::f64::consts::PI/2.0,
+                std::f32::consts::PI/2.0,
                 (-a[(0,1)]).atan2(a[(1,1)])
             );
         }
@@ -109,26 +108,26 @@ fn a2euler(a : &Matrix3<f64>) -> (f64, f64, f64) {
         return (
             0.0,
             (-a[(0,1)]).atan2(a[(1,1)]),
-            -std::f64::consts::PI/2.0
+            -std::f32::consts::PI/2.0
         );
     }
 }
 
-fn axis_angle2q(p : &Vector3<f64>, fi : f64) -> Quaternion<f64> {
+fn axis_angle2q(p : &na::Vector3<f32>, fi : f32) -> na::Quaternion<f32> {
     let w = (fi/2.0).cos();
     let pn = p.normalize();
     let m = (fi/2.0).sin();
-    Quaternion::<f64>::new(w, m*pn.x, m*pn.y, m*pn.z)
+    na::Quaternion::<f32>::new(w, m*pn.x, m*pn.y, m*pn.z)
 }
 
-fn q2axis_angle(q : &Quaternion<f64>) -> (Vector3<f64>, f64) {
+fn q2axis_angle(q : &na::Quaternion<f32>) -> (na::Vector3<f32>, f32) {
     let q_norm = 
         if q.w >= 0.0 { q.normalize() }
         else { -q.normalize() };
     let fi = 2.0 * q_norm.w.acos();
     if q_norm.w.abs() == 1.0 {
-        (Vector3::<f64>::new(1.0, 0.0, 0.0), fi)
+        (na::Vector3::<f32>::new(1.0, 0.0, 0.0), fi)
     } else {
-        (Vector3::<f64>::new(q_norm.i, q_norm.j, q_norm.k).normalize(), fi)
+        (na::Vector3::<f32>::new(q_norm.i, q_norm.j, q_norm.k).normalize(), fi)
     }
 }
