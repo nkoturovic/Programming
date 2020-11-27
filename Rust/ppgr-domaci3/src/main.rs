@@ -1,7 +1,23 @@
 use nalgebra as na;
 
 fn main() {
-    prikazi_primer(-f32::atan(1.0/4.0), -f32::asin(8.0/9.0), f32::atan(4.0));
+    prikazi_primer(
+        33.0 * std::f32::consts::PI/180.0, 
+        66.0 * std::f32::consts::PI/180.0, 
+        0.0
+     );
+
+    prikazi_primer(
+        std::f32::consts::PI,
+       -std::f32::consts::PI/2.0,
+       -std::f32::consts::PI/4.0,
+     );
+
+    prikazi_primer(
+       -f32::atan(1.0/4.0), 
+       -f32::asin(8.0/9.0), 
+        f32::atan(4.0)
+    );
 }
 
 fn prikazi_primer(fi : f32, teta : f32, psi : f32) {
