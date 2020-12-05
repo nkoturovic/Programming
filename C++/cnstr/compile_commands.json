@@ -1,0 +1,19 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-g",
+      "-std=c++20",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-c",
+      "-o",
+      "main.o",
+      "main.cpp"
+    ],
+    "directory": "/home/kotur/Desktop/prog/github/Programming/C++/cnstr",
+    "file": "/home/kotur/Desktop/prog/github/Programming/C++/cnstr/main.cpp",
+    "output": "/home/kotur/Desktop/prog/github/Programming/C++/cnstr/main.o"
+  }
+]
