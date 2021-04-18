@@ -4,13 +4,13 @@ import sys
 import os
 import glob
 
-usage = os.path.basename(sys.argv[0]) + " src_dir dest_dir"
+usage = os.path.basename(sys.argv[0]) + " src_dir/ dest_dir/"
 
 if len(sys.argv) != 3:
     sys.exit("Usage: " + usage)
 
-srcDir = sys.argv[1];
-destDir = sys.argv[2];
+srcDir = sys.argv[1]
+destDir = sys.argv[2]
 
 if not os.path.exists(destDir):
     os.makedirs(destDir)
@@ -26,6 +26,7 @@ listOfFiles.sort()
 # tree file creating
 os.system("tree " + srcDir + "> " + destDir + "/000tree.txt")
 fileCounter = 1
+filePrepend = ""
 
 for filepath in listOfFiles:
 
@@ -39,7 +40,7 @@ for filepath in listOfFiles:
 
                 fileContent = ""
 
-                if filePrepend is not "":
+                if filePrepend != "":
                     fileContent += filePrepend
                     filePrepend = ""
 
