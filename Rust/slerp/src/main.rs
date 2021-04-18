@@ -181,64 +181,11 @@ fn axis_angle(a : &na::Matrix3<f32>) -> (na::Vector3<f32>, f32) {
     }
 }
 
-#[allow(dead_code)]
-fn rodrigez(p : &na::Vector3<f32>, fi : f32) -> na::Matrix3<f32> {
-    let pn = p.normalize();
-    let px = na::Matrix3::<f32>::new(
-        0.0, -pn.z, pn.y,
-        pn.z, 0.0, -pn.x,
-        -pn.y, pn.x, 0.0
-    );
-
-    // formula rodrigeza
-    p*p.transpose() + fi.cos() *
-        (na::Matrix3::<f32>::from_diagonal_element(1.0) -
-            p*p.transpose()) + fi.sin() * px
-}
-
-#[allow(dead_code)]
-fn a2euler(a : &na::Matrix3<f32>) -> (f32, f32, f32) {
-    if a[(2,0)] < 1.0 {
-        if a[(2,0)] > -1.0 {
-            return (
-                a[(2,1)].atan2(a[(2,2)]) ,
-                (-a[(2,0)]).asin(),
-                a[(1,0)].atan2(a[(0,0)])
-            );
-        } else {
-            return (
-                0.0,
-                std::f32::consts::PI/2.0,
-                (-a[(0,1)]).atan2(a[(1,1)])
-            );
-        }
-    } else {
-        return (
-            0.0,
-            (-a[(0,1)]).atan2(a[(1,1)]),
-            -std::f32::consts::PI/2.0
-        );
-    }
-}
-
 fn axis_angle2q(p : &na::Vector3<f32>, fi : f32) -> na::Quaternion<f32> {
     let w = (fi/2.0).cos();
     let pn = p.normalize();
     let m = (fi/2.0).sin();
     na::Quaternion::<f32>::new(w, m*pn.x, m*pn.y, m*pn.z)
-}
-
-#[allow(dead_code)]
-fn q2axis_angle(q : &na::Quaternion<f32>) -> (na::Vector3<f32>, f32) {
-    let q_norm = 
-        if q.w >= 0.0 { q.normalize() }
-        else { -q.normalize() };
-    let fi = 2.0 * q_norm.w.acos();
-    if q_norm.w.abs() == 1.0 {
-        (na::Vector3::<f32>::new(1.0, 0.0, 0.0), fi)
-    } else {
-        (na::Vector3::<f32>::new(q_norm.i, q_norm.j, q_norm.k).normalize(), fi)
-    }
 }
 
 fn lerp(start : na::Vector3<f32>, end : na::Vector3<f32>, t : f32, tmax : f32) -> na::Vector3<f32> {
