@@ -82,7 +82,6 @@ def procitaj_fajl(putanja):
         sys.exit('Neuspesno otvaranje fajla')
 
 sadrzaj_fajla = procitaj_fajl(putanja_do_fajla)
-
 ############ KREIRANJE REGEXA ###############
 def napravi_regex_igraca():
     ime = r'(?P<ime>[A-Z][a-z]*\s*([A-Za-z][a-z]*)?\s*([A-Z][a-z]*)?)'
