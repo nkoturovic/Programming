@@ -19,6 +19,9 @@ stack.hh
 *.gch
 *.pch
 
+# Precompiled Modules
+*.pcm
+
 # Compiled Dynamic libraries
 *.so
 *.dylib
@@ -50,3 +53,4 @@ __pycache__/
 Cargo.lock
 Target
 target
+.cache
