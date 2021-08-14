@@ -1,6 +1,6 @@
 PROGRAM   = main.out
 CXX       = g++
-CXXFLAGS  = -g -std=c++17 -Wall -Wextra -Wpedantic
+CXXFLAGS  = -g -std=c++20 -Wall -Wextra -Wpedantic
 LDFLAGS   = -lfmt
 
 $(PROGRAM): main.o
